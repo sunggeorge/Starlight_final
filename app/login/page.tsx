@@ -5,8 +5,8 @@ import { redirect } from 'next/navigation';
 import { getUser } from '@/app/lib/utils/authUtils';
 
 export const metadata = {
-  title: 'HomeServices - Login',
-  description: 'HomeServices login description',
+  title: 'Nail Shop Online System - Login',
+  description: 'Nail Shop Online System login description',
   keywords: 'next, next.js, react, app, booking',
 };
 

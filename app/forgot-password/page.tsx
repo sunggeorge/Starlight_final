@@ -4,8 +4,8 @@ import { redirect } from 'next/navigation';
 import { getUser } from '@/app/lib/utils/authUtils';
 
 export const metadata = {
-  title: 'HomeServices - Forgot Password',
-  description: 'HomeServices forgot password description',
+  title: 'Nail Shop Online System - Forgot Password',
+  description: 'Nail Shop Online System forgot password description',
   keywords: 'next, next.js, react, app, booking',
 };
 const ForgotPassword = async () => {
