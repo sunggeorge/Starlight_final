@@ -4,8 +4,8 @@ import { redirect } from 'next/navigation';
 import { getUser } from '@/app/lib/utils/authUtils';
 
 export const metadata = {
-  title: 'HomeServices - Update Password',
-  description: 'HomeServices update password description',
+  title: 'Nail Shop Online System - Update Password',
+  description: 'Nail Shop Online System update password description',
   keywords: 'next, next.js, react, app, booking',
 };
 const UpdatePassword = async ({ searchParams }: { searchParams: { code: string } }) => {
