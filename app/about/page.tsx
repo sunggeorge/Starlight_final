@@ -1,8 +1,8 @@
 import React from 'react';
 
 export const metadata = {
-  title: 'HomeServices - About Us',
-  description: 'HomeServices about description',
+  title: 'Nail Shop Online System - About Us',
+  description: 'Nail Shop Online System about description',
   keywords: 'next, next.js, react, app, booking',
 };
 const About = () => {

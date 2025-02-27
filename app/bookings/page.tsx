@@ -4,8 +4,8 @@ import { useUser } from '@/app/context/UserContext';
 import { UserRoles } from '../lib/constants/role';
 
 // export const metadata = {
-//   title: 'HomeServices - Bookings',
-//   description: 'HomeServices about description',
+//   title: 'Nail Shop Online System - Bookings',
+//   description: 'Nail Shop Online System about description',
 //   keywords: 'next, next.js, react, app, booking',
 // };
 const Bookings = () => {

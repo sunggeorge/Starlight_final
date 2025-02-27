@@ -4,8 +4,8 @@ import PopularServicesPersonCard from '@/app/components/services/PopularServices
 import { servicePersonExtended } from '@/app/lib/interfaces/service';
 
 export const metadata = {
-  title: 'HomeServices - Services',
-  description: 'HomeServices services description',
+  title: 'Nail Shop Online System - Services',
+  description: 'Nail Shop Online System services description',
   keywords: 'next, next.js, react, app, booking',
 };
 const Services = async ({ searchParams }: { searchParams: any }) => {
