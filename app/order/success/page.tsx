@@ -8,8 +8,8 @@ import { redirect } from 'next/navigation';
 import Loading from '@/app/components/misc/Loading';
 
 export const metadata: Metadata = {
-  title: 'HomeServices - Order Successfuly',
-  description: 'HomeServices details description',
+  title: 'Nail Shop Online System - Order Successfuly',
+  description: 'Nail Shop Online System details description',
   keywords: 'next, next.js, react, app, booking',
 };
 

@@ -61,7 +61,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="text-white flex justify-center items-center font-extralight p-4 border-t-[1px] border-solid border-white/15 w-full">
-            &copy;2024 - HomeServices. All rights reserved.d
+            &copy;2025 - Nail Shop Online System. All rights reserved.d
           </div>
         </div>
       )}
