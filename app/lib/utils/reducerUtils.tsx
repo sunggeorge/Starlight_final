@@ -61,7 +61,13 @@ export const cleaningReducer = (state: CleaningState, action: Action) => {
         ...state,
       };
     case 'decrementStep':
-      if (state.step > 1) {
+      if (state.step === 4) {
+        return {
+          ...state,
+          step: state.step - 2,
+        };
+      }
+      else if (state.step > 1) {
         return {
           ...state,
           step: state.step - 1,
