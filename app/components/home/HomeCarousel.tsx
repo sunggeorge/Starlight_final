@@ -84,7 +84,8 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-1.png"
+                  // src="/images/discount-people-1.png"
+                  src="/images/1.jpg"
                   alt="Today`s Special!"
                   width={500}
                   height={500}
@@ -106,7 +107,8 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-2.png"
+                  // src="/images/discount-people-2.png"
+                  src="/images/2.jpg"
                   alt="Friday Special!"
                   width={500}
                   height={500}
@@ -128,7 +130,8 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-3.png"
+                  // src="/images/discount-people-3.png"
+                  src="/images/3.jpg"
                   alt="New Promo!"
                   width={500}
                   height={500}
@@ -150,7 +153,8 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-4.png"
+                  // src="/images/discount-people-4.png"
+                  src="/images/4.jpg"
                   alt="Weekend Special!"
                   width={500}
                   height={500}
