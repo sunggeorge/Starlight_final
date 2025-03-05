@@ -12,10 +12,6 @@ import { MdClose } from 'react-icons/md';
 import { useUser } from '@/app/context/UserContext';
 import { UserRoles } from '@/app/lib/constants/role';
 
-// interface HeaderProps {
-//   user: Record<string, any> | null;
-//   userDetails: Record<string, any> | null;
-// }
 
 const Header: React.FC = () => {
   // const Header: React.FC<HeaderProps> = ({ user, userDetails }) => {
