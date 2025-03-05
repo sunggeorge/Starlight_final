@@ -84,7 +84,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-cleaning.png"
+                  src="/images/discount-people-1.png"
                   alt="Today`s Special!"
                   width={500}
                   height={500}
@@ -106,7 +106,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-repairing.png"
+                  src="/images/discount-people-2.png"
                   alt="Friday Special!"
                   width={500}
                   height={500}
@@ -128,7 +128,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-painting.png"
+                  src="/images/discount-people-3.png"
                   alt="New Promo!"
                   width={500}
                   height={500}
@@ -150,7 +150,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
                 <Image
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
-                  src="/images/discount-people-appliance.png"
+                  src="/images/discount-people-4.png"
                   alt="Weekend Special!"
                   width={500}
                   height={500}
