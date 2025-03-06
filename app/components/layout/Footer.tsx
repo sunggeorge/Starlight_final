@@ -6,6 +6,7 @@ import { FaInstagram } from 'react-icons/fa';
 import { BsTwitterX } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
+import '@/app/styles/layout.css';
 
 const Footer = () => {
   const pathname = usePathname();
@@ -14,12 +15,13 @@ const Footer = () => {
   return (
     <>
       {isVisible && (
-        <div className="footer flex flex-col pt-8 bg-base-100">
+        <div className="footer flex flex-col pt-8 footer-bg">
           <div className="container mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-3 w-full py-4 px-4 gap-4 sm:gap-0 sm:py-6">
               <div className="flex flex-col items-center gap-2 justify-center mb-4 sm:justify-start sm:items-start sm:mb-0">
                 <Link className="btn btn-ghost text-xl" href="/">
-                  <Image className="dark:invert" src="/images/logo.svg" alt="Logo" width={35} height={35} priority />
+                  <Image src="/images/logo.png" alt="Logo" width={35} height={35} priority />
+                  {/* <Image className="dark:invert" src="/images/logo.png" alt="Logo" width={35} height={35} priority /> */}
                 </Link>
                 <p className="text-gray-200 text-center sm:text-left">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.

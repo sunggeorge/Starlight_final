@@ -11,6 +11,7 @@ import { MdMenu } from 'react-icons/md';
 import { MdClose } from 'react-icons/md';
 import { useUser } from '@/app/context/UserContext';
 import { UserRoles } from '@/app/lib/constants/role';
+import '@/app/styles/layout.css';
 
 
 const Header: React.FC = () => {
@@ -67,7 +68,8 @@ const Header: React.FC = () => {
 
   return (
     <div className="header min-h-[65px]">
-      <div className="navbar bg-base-100 px-4 py-1 fixed z-[9999] rounded-none">
+      <div className="navbar header-bg px-4 py-1 fixed z-[9999] rounded-none">
+      {/* <div className="navbar bg-base-100 px-4 py-1 fixed z-[9999] rounded-none"> */}
         <div className="navbar-start">
           <div className="dropdown" onBlur={onBlurMobileDropdown}>
             <label
@@ -110,12 +112,13 @@ const Header: React.FC = () => {
             )}
           </div>
           <Link className="btn btn-ghost text-xl hidden lg:flex" href="/">
-            <Image className="dark:invert" src="/images/logo.svg" alt="Logo" width={35} height={35} priority />
+            <Image src="/images/logo.png" alt="Logo" width={45} height={45} priority />
+            {/* <Image className="dark:invert" src="/images/logo.jpg" alt="Logo" width={35} height={35} priority /> */}
           </Link>
         </div>
         <div className="navbar-center">
           <Link className="btn btn-ghost text-xl lg:hidden" href="/">
-            <Image className="dark:invert" src="/images/logo.svg" alt="Logo" width={35} height={35} priority />
+            <Image src="/images/logo.png" alt="Logo" width={45} height={45} priority />
           </Link>
           <ul className="menu menu-horizontal px-1 text-white hidden lg:flex">
             {user && (

@@ -1,0 +1,7 @@
+.header-bg {
+  @apply bg-indigo-500
+}
+
+.footer-bg {
+    @apply bg-indigo-500
+  }
