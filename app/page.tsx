@@ -3,10 +3,12 @@ import HomePopularServices from './components/home/HomePopularServices';
 import HomeCarousel from './components/home/HomeCarousel';
 
 export const metadata = {
-  title: 'HomeServices - Home',
-  description: 'HomeServices home description',
+  title: 'Nail Shop Online System - Home',
+  description: 'Nail Shop Online System description',
   keywords: 'next, next.js, react, app, booking',
 };
+
+// HomePage
 const Home = () => {
   return (
     <div className="home w-full">
