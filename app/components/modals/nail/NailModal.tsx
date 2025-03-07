@@ -20,11 +20,14 @@ interface NailModalProps {
   onClose?: () => void;
 }
 
+
+
 const NailModal: React.FC<NailModalProps> = ({ person, user, onClose = () => {} }) => {
   const [state, dispatch] = useReducer(nailReducer, {
     person: person,
     step: 1,
-    services: nailServices.map((item) => ({ ...item, quantity: 0 })),
+    services: nailServices.filter((item) => item.categoryID === person.categoryId)
+                          .map((item) => ({ ...item, quantity: 0 })),
     totalPrice: 0,
     date: format(new Date(), 'yyyy-MM-dd'),
     time: '09:00 AM',
@@ -39,7 +42,7 @@ const NailModal: React.FC<NailModalProps> = ({ person, user, onClose = () => {} 
     proceedCheckout: false,
     user: user,
   });
-
+  // console.log("Person - CategoryID: ",person.categoryId);
   const contextValue = useMemo(
     () => ({
       person,

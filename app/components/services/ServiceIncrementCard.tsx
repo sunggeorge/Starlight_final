@@ -6,12 +6,14 @@ import { FaMinus, FaPlus } from 'react-icons/fa6';
 interface ServiceIncrementCardProps {
   quantity: number;
   label: string;
+  price: number;
   onChangeQuantity?: (quantity: number) => void;
 }
 
 const ServiceIncrementCard: React.FC<ServiceIncrementCardProps> = ({
   quantity = 0,
   label,
+  price,
   onChangeQuantity = () => {},
 }) => {
   const [quantityValue, setQuantityValue] = useState<number>(quantity);
@@ -30,7 +32,7 @@ const ServiceIncrementCard: React.FC<ServiceIncrementCardProps> = ({
 
   return (
     <div className="service-increment-card bg-white shadow-sm rounded-badge flex justify-between items-center w-full p-4">
-      <div className="text-md text-base-100 font-semibold">{label}</div>
+      <div className="text-md text-base-100 font-semibold">{label}<br/> ${price}</div>
       <div className="flex items-center gap-2">
         <button
           className="btn btn-sm btn-circle bg-primary/10 font-normal text-primary hover:bg-primary/25 hover:border-primary/5"
