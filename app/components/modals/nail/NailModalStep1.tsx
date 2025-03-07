@@ -17,12 +17,14 @@ const NailModalStep1 = () => {
       });
       dispatch({
         type: 'setTotalPrice',
-        payload: state.services.reduce((acc: number, serviceItem: { quantity: number; id: number }) => {
+        payload: state.services.reduce((acc: number, serviceItem: { quantity: number; id: number; price: number }) => {
           if (serviceItem.id === item.id) {
-            return acc + newQuantity * person.price;
+            // return acc + newQuantity * person.price;
+            return acc + newQuantity * serviceItem.price;
           }
 
-          return acc + serviceItem.quantity * person.price;
+          // return acc + serviceItem.quantity * person.price;
+          return acc + serviceItem.quantity * serviceItem.price;
         }, 0),
       });
     },
@@ -37,6 +39,7 @@ const NailModalStep1 = () => {
           quantity={item.quantity}
           key={item.id}
           label={item.title}
+          price={item.price}
           onChangeQuantity={(newQuantity) => onChangeQuantity(item, newQuantity)}
         />
       ))}
