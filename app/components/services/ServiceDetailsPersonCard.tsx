@@ -45,7 +45,8 @@ const ServiceDetailsPersonCard: React.FC<ServiceDetailsPersonCardProps> = ({ per
         <div className="flex items-center justify-end gap-2">
           <Price className="my-auto" price={person.price as number} size="large" />
           <span className="text-gray-500 text-sm font-normal">
-            / {person.category.title === ServiceCategory.cleaning ? 'floor' : 'hour'}
+            {/* / {person.category.title === ServiceCategory.cleaning ? 'floor' : 'hour'} */}
+            / hour
           </span>
         </div>
         <div className="divider"></div>

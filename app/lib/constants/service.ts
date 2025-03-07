@@ -1,8 +1,7 @@
 export enum ServiceCategory {
-  cleaning = 'Cleaning',
-  repairing = 'Repairing',
-  painting = 'Painting',
-  plumbing = 'Plumbing',
-  appliance = 'Appliance',
-  shifting = 'Shifting',
+  nail = 'Nail',
+  nailArt = 'Nail Art',
+  eyelashExtensions = 'Eyelash Extensions',
+  keratinEyelash = 'Keratin Eyelash',
+  otherItems = 'Other Items',
 }
