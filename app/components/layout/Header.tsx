@@ -84,6 +84,11 @@ const Header: React.FC = () => {
                 tabIndex={0}
                 className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
               >
+                <li>
+                <Link className="menu-link text-white hover:text-primary focus:text-primary" href="/">
+                  Home
+                  </Link>
+                </li>
                 {user && (
                   <li>
                     <Link className="menu-link text-white hover:text-primary focus:text-primary" href="/bookings">
@@ -94,6 +99,11 @@ const Header: React.FC = () => {
                 <li>
                   <Link className="menu-link text-white hover:text-primary focus:text-primary" href="/services">
                     Services
+                  </Link>
+                </li>
+                <li>
+                  <Link className="menu-link text-white hover:text-primary focus:text-primary" href="/gallery">
+                    Gallery
                   </Link>
                 </li>
                 {isManager && (
@@ -121,6 +131,12 @@ const Header: React.FC = () => {
             <Image src="/images/logo.png" alt="Logo" width={45} height={45} priority />
           </Link>
           <ul className="menu menu-horizontal px-1 text-white hidden lg:flex">
+            <li>
+              <Link className="text-white hover:text-primary focus:text-primary" href="/">
+                Home
+              </Link>
+            </li>
+
             {user && (
               <li>
                 <Link className="text-white hover:text-primary focus:text-primary" href="/bookings">
@@ -131,6 +147,11 @@ const Header: React.FC = () => {
             <li>
               <Link className="text-white hover:text-primary focus:text-primary" href="/services">
                 Services
+              </Link>
+            </li>
+            <li>
+              <Link className="text-white hover:text-primary focus:text-primary" href="/gallery">
+                Gallery
               </Link>
             </li>
             {isManager && (
