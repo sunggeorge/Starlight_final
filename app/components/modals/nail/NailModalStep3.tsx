@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useContext } from 'react';
-import { CleaningModalContext } from '@/app/lib/utils/contextUtils';
+import { NailModalContext } from '@/app/lib/utils/contextUtils';
 import Map from '@/app/components/location/Map';
 import AddressLocationInput from '@/app/components/location/AddressLocationInput';
 
-const CleaningModalStep3 = () => {
-  const { state, dispatch } = useContext(CleaningModalContext);
+const NailModalStep3 = () => {
+  const { state, dispatch } = useContext(NailModalContext);
   const setLocation = (payload: any) => {
     dispatch({
       type: 'setLocation',
@@ -15,7 +15,7 @@ const CleaningModalStep3 = () => {
   };
 
   return (
-    <div className="cleaning-modal-step-3 flex flex-col w-full gap-4">
+    <div className="nail-modal-step-3 flex flex-col w-full gap-4">
       <div className="flex w-full relative z-10">
         <Map latitude={state.location.latitude} longitude={state.location.longitude} />
       </div>
@@ -29,4 +29,4 @@ const CleaningModalStep3 = () => {
   );
 };
 
-export default CleaningModalStep3;
+export default NailModalStep3;

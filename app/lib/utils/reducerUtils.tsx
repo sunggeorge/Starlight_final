@@ -1,6 +1,6 @@
 import { servicePersonExtended } from '@/app/lib/interfaces/service';
 
-interface CleaningState {
+interface NailState {
   person: servicePersonExtended;
   step: number;
   services: Record<string, any>[];
@@ -20,7 +20,7 @@ interface Action {
   payload?: any;
 }
 
-export const cleaningReducer = (state: CleaningState, action: Action) => {
+export const nailReducer = (state: NailState, action: Action) => {
   const { type, payload } = action;
   switch (type) {
     case 'setServiceQuantity':

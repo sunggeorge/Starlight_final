@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { CleaningModalContext } from '@/app/lib/utils/contextUtils';
+import { NailModalContext } from '@/app/lib/utils/contextUtils';
 import Price from '@/app/components/misc/Price';
 
 const OrderSummary = () => {
-  const { state } = useContext(CleaningModalContext);
+  const { state } = useContext(NailModalContext);
 
   return (
     <div className="order-summary grid grid-cols-2 gap-4">
