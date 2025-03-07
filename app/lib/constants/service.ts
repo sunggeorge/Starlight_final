@@ -3,5 +3,4 @@ export enum ServiceCategory {
   nailArt = 'Nail Art',
   eyelashExtensions = 'Eyelash Extensions',
   keratinEyelash = 'Keratin Eyelash',
-  otherItems = 'Other Items',
 }
