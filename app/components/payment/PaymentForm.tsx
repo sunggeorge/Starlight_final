@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useContext, useCallback, useEffect } from 'react';
-import { CleaningModalContext } from '@/app/lib/utils/contextUtils';
+import { NailModalContext } from '@/app/lib/utils/contextUtils';
 import { PaymentElement, LinkAuthenticationElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeElements, StripeError } from '@stripe/stripe-js';
 import { MdOutlineErrorOutline } from 'react-icons/md';
@@ -14,7 +14,7 @@ import { setOrderNonce } from '@/app/lib/utils/storageUtils';
 import logService from '@/app/lib/services/logService';
 
 const PaymentForm = () => {
-  const { state, dispatch } = useContext(CleaningModalContext);
+  const { state, dispatch } = useContext(NailModalContext);
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

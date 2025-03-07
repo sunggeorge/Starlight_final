@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useContext, useMemo } from 'react';
-import { CleaningModalContext } from '@/app/lib/utils/contextUtils';
+import { NailModalContext } from '@/app/lib/utils/contextUtils';
 import { Elements } from '@stripe/react-stripe-js';
 import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import PaymentForm from '@/app/components/payment/PaymentForm';
@@ -9,8 +9,8 @@ import OrderSummary from '@/app/components/order/OrderSummary';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const CleaningModalStep4 = () => {
-  const { state } = useContext(CleaningModalContext);
+const NailModalStep4 = () => {
+  const { state } = useContext(NailModalContext);
   const options = useMemo(
     () =>
       ({
@@ -52,7 +52,7 @@ const CleaningModalStep4 = () => {
   );
 
   return (
-    <div className="cleaning-modal-step-4 flex flex-col w-full h-full gap-4 mt-2">
+    <div className="nail-modal-step-4 flex flex-col w-full h-full gap-4 mt-2">
       <Elements options={options} stripe={stripePromise}>
         <details
           className="collapse collapse-arrow bg-white shadow-sm rounded-badge flex justify-between items-center w-full"
@@ -74,4 +74,4 @@ const CleaningModalStep4 = () => {
   );
 };
 
-export default CleaningModalStep4;
+export default NailModalStep4;

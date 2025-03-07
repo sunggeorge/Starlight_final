@@ -14,12 +14,12 @@ interface ServiceIconProps {
 const ServiceIcon: React.FC<ServiceIconProps> = ({ type }) => {
   return (
     <>
-      {type === ServiceCategory.cleaning && <MdCleaningServices />}
+      {/* {type === ServiceCategory.cleaning && <MdCleaningServices />}
       {type === ServiceCategory.repairing && <HiMiniWrenchScrewdriver />}
       {type === ServiceCategory.painting && <FaPaintRoller />}
       {type === ServiceCategory.plumbing && <MdPlumbing />}
       {type === ServiceCategory.appliance && <IoHammer />}
-      {type === ServiceCategory.shifting && <MdLocalShipping />}
+      {type === ServiceCategory.shifting && <MdLocalShipping />} */}
     </>
   );
 };

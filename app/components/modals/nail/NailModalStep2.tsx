@@ -2,12 +2,12 @@
 
 import React, { useCallback, useContext } from 'react';
 import Calendar from '@/app/components/date/Calendar';
-import { CleaningModalContext } from '@/app/lib/utils/contextUtils';
+import { NailModalContext } from '@/app/lib/utils/contextUtils';
 import { startTime } from '@/app/lib/data';
 import { format } from 'date-fns';
 
-const CleaningModalStep2 = () => {
-  const { state, dispatch } = useContext(CleaningModalContext);
+const NailModalStep2 = () => {
+  const { state, dispatch } = useContext(NailModalContext);
   const onDateChange = useCallback(
     (value: any) => {
       dispatch({
@@ -36,7 +36,7 @@ const CleaningModalStep2 = () => {
   };
 
   return (
-    <div className="cleaning-modal-step-2 flex flex-col w-full h-full gap-4">
+    <div className="nail-modal-step-2 flex flex-col w-full h-full gap-4">
       <p className="text-md text-base-100 font-semibold my-2">Select Date</p>
       <Calendar onChange={onDateChange} defaultValue={new Date(state.date)} />
       <p className="text-md text-base-100 font-semibold my-2">Choose Start Time</p>
@@ -65,4 +65,4 @@ const CleaningModalStep2 = () => {
   );
 };
 
-export default CleaningModalStep2;
+export default NailModalStep2;
