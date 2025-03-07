@@ -26,27 +26,118 @@ export const stars = [
 export const nailServices = [
   {
     id: 1,
-    title: 'Soft Gel Hands Single/Dual Color',
+    title: 'Simple Nail-  Soft Gel Hands Single/Dual Color',
+    price: 220,
   },
   {
     id: 2,
-    title: 'Hard Gel Hands Single/Dual Color',
+    title: 'Simple Nail - Hard Gel Hands Single/Dual Color',
+    price: 280,
   },
   {
     id: 3,
-    title: 'Soft Gel Foot Single/Dual Color',
+    title: 'Simple Nail - Soft Gel Foot Single/Dual Color',
+    price: 220,
   },
   {
     id: 4,
-    title: 'Hard Gel Foot Single/Dual Color',
+    title: 'Simple Nail - Hard Gel Foot Single/Dual Color',
+    price: 280,
   },
   {
     id: 5,
-    title: 'Basic Hand Repair',
+    title: 'Simple Nail - Basic hand repair',
+    price: 80,
   },
   {
     id: 6,
-    title: 'Basic Pedicure',
+    title: 'Simple Nail - Advanced practitioner',
+    price: 188,
+  },
+  {
+    id: 7,
+    title: 'Simple Nail - Basic Pedicure',
+    price: 110,
+  },
+  {
+    id: 8,
+    title: 'Simple Nail - Advanced pedicure',
+    price: 388,
+  },
+  {
+    id: 9,
+    title: 'Simple Nail - Repair broken armor',
+    price: 20,
+  },
+  {
+    id: 10,
+    title: 'Simple Nail - xxxxxx',
+    price: 130,
+  },
+  {
+    id: 11,
+    title: 'Simple Nail - Repair armor',
+    price: 30,
+  },
+  {
+    id: 12,
+    title: 'Nail Art - Soft gel simple style design (glitter, cat eye, French...)',
+    price: 280,
+  },
+  {
+    id: 13,
+    title: 'Nail Art - Hard gel complex style design (complex hand-painted, rhinestone...)',
+    price: 300,
+  },
+  {
+    id: 14,
+    title: 'Nail Art - extended nails',
+    price: 20,
+  },
+  {
+    id: 15,
+    title: 'Eyelash extensions - Natural style single root grafting',
+    price: 399,
+  },
+  {
+    id: 16,
+    title: 'Eyelash extensions - Thick style single root grafting',
+    price: 499,
+  },
+  {
+    id: 17,
+    title: 'Eyelash extensions - Natural style flowering grafting',
+    price: 439,
+  },
+  {
+    id: 18,
+    title: 'Eyelash extensions - Thick style flowering grafting',
+    price: 539,
+  },
+  {
+    id: 19,
+    title: 'Keratin eyelashes',
+    price: 399,
+  },
+  {
+    id: 20,
+    title: 'Eyelash spa',
+    price: 100,
+  },
+  {
+    id: 21,
+    title: 'Remove eyelashes',
+    price: 60,
+  },
+  {
+    id: 22,
+    title: 'Lower eyelashes unlimited',
+    price: 50,
+  },
+  {
+    id: 23,
+    title: 'Eyelash extensions',
+    price: 199,
   },
 ];
 
