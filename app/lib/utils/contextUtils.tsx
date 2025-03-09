@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const CleaningModalContext = createContext<any>(undefined);
+export const NailModalContext = createContext<any>(undefined);

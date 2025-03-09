@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import CleaningModal from '@/app/components/modals/cleaning/CleaningModal';
-import { ServiceCategory } from '@/app/lib/constants/service';
+import NailModal from '@/app/components/modals/nail/NailModal';
+// import { ServiceCategory } from '@/app/lib/constants/service';
 import { servicePersonExtended } from '@/app/lib/interfaces/service';
 import { useRouter } from 'next/navigation';
 import logService from '@/app/lib/services/logService';
@@ -18,7 +18,8 @@ const ServiceDetailsActionButtons: React.FC<ServiceDetailsActionButtonsProps> = 
 
   const showModal = useCallback(() => {
     const category = person.category.title?.toLowerCase();
-    const modalElement = document.querySelector(`.house-${category}-modal`) as HTMLDialogElement;
+    // const modalElement = document.querySelector(`.salon-${category}-modal`) as HTMLDialogElement;
+    const modalElement = document.querySelector(`.salon-nail-modal`) as HTMLDialogElement;
     if (modalElement) {
       modalElement.showModal();
       return;
@@ -76,7 +77,8 @@ const ServiceDetailsActionButtons: React.FC<ServiceDetailsActionButtonsProps> = 
       <button className="btn btn-primary font-normal" onClick={onBookNow}>
         Book Now
       </button>
-      {activeModal === ServiceCategory.cleaning && <CleaningModal person={person} onClose={onCloseModal} user={user} />}
+      {/* {activeModal === ServiceCategory.nail && <NailModal person={person} onClose={onCloseModal} user={user} />} */}
+      {activeModal && <NailModal person={person} onClose={onCloseModal} user={user} />}
     </div>
   );
 };

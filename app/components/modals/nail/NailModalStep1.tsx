@@ -2,10 +2,10 @@
 
 import React, { useCallback, useContext } from 'react';
 import ServiceIncrementCard from '@/app/components/services/ServiceIncrementCard';
-import { CleaningModalContext } from '@/app/lib/utils/contextUtils';
+import { NailModalContext } from '@/app/lib/utils/contextUtils';
 
-const CleaningModalStep1 = () => {
-  const { person, state, dispatch } = useContext(CleaningModalContext);
+const NailModalStep1 = () => {
+  const { person, state, dispatch } = useContext(NailModalContext);
   const onChangeQuantity = useCallback(
     (item: Record<string, any>, newQuantity: number) => {
       dispatch({
@@ -17,12 +17,14 @@ const CleaningModalStep1 = () => {
       });
       dispatch({
         type: 'setTotalPrice',
-        payload: state.services.reduce((acc: number, serviceItem: { quantity: number; id: number }) => {
+        payload: state.services.reduce((acc: number, serviceItem: { quantity: number; id: number; price: number }) => {
           if (serviceItem.id === item.id) {
-            return acc + newQuantity * person.price;
+            // return acc + newQuantity * person.price;
+            return acc + newQuantity * serviceItem.price;
           }
 
-          return acc + serviceItem.quantity * person.price;
+          // return acc + serviceItem.quantity * person.price;
+          return acc + serviceItem.quantity * serviceItem.price;
         }, 0),
       });
     },
@@ -30,13 +32,14 @@ const CleaningModalStep1 = () => {
   );
 
   return (
-    <div className="cleaning-modal-step-1 flex flex-col w-full gap-4">
+    <div className="nail-modal-step-1 flex flex-col w-full gap-4">
       <p className="text-sm text-gray-600 font-light my-2">Enter the number of items to be cleared.</p>
       {state.services.map((item: Record<string, any>) => (
         <ServiceIncrementCard
           quantity={item.quantity}
           key={item.id}
           label={item.title}
+          price={item.price}
           onChangeQuantity={(newQuantity) => onChangeQuantity(item, newQuantity)}
         />
       ))}
@@ -44,4 +47,4 @@ const CleaningModalStep1 = () => {
   );
 };
 
-export default CleaningModalStep1;
+export default NailModalStep1;
