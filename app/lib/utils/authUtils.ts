@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import prisma from '@/app/lib/utils/prisma/database';
 import { headers } from 'next/headers';
+import { userExtended } from '@/app/lib/interfaces/service';
 
 export const login = async (data: { email: string; password: string }, redirectUrl?: string) => {
   const supabase = createClient();
@@ -144,11 +145,29 @@ export const getUser = async () => {
   const supabase = createClient();
   const response = await supabase.auth.getUser();
 
+  const matchedUser = response.data.user ? await prisma.user.findFirst({
+    where: {
+      email: response.data.user.email,
+    },
+  }) : null;
+
   if (response.error) {
     return response.data.user;
   }
-
-  return response.data.user;
+  const returnUser: userExtended = {
+    ...response.data.user,
+    email: response.data.user.email || null,
+    uuid: matchedUser?.uuid || '',
+    imageUrl: matchedUser?.imageUrl || '',
+    first_name: matchedUser?.first_name || '',
+    last_name: matchedUser?.last_name || '',
+    userId: matchedUser?.id || 0,
+    id: matchedUser?.id || 0,
+    created_at: new Date(response.data.user.created_at),
+    role: response.data.user.role || ''
+  };
+  // returnUser.userId = matchedUser?.id;    
+  return returnUser;
 };
 
 export const getSession = async () => {

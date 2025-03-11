@@ -19,7 +19,7 @@ const Header: React.FC = () => {
 
   const context = useUser();
   const { user, userDetails } = context;
-  console.log('userDetails:', userDetails);
+  // console.log('userDetails:', userDetails);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
