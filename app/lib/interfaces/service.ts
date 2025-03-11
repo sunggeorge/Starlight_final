@@ -1,4 +1,4 @@
-import { category, personPhotos, review, servicePerson } from '@prisma/client';
+import { category, personPhotos, review, servicePerson, user } from '@prisma/client';
 
 export interface servicePersonExtended extends servicePerson {
   category: category;
@@ -8,6 +8,10 @@ export interface servicePersonExtended extends servicePerson {
   };
   photos?: personPhotos[];
   rating: number;
+}
+
+export interface userExtended extends user {
+  userId?: number;
 }
 
 export interface reviewExtended extends review {

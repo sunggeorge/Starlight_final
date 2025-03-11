@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/utils/prisma/database';
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   const headers = req.headers;
   const body = await req.json();
 
@@ -17,11 +17,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!body || !body.services) {
+  if (!body || !body.services || !body.id) {
     return NextResponse.json(
       {
         data: {
-          message: 'Bad request.',
+          message: 'Bad request. Missing required fields.',
           type: 'Error',
         },
       },
@@ -30,7 +30,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const response = await prisma.order.create({
+    const response = await prisma.order.update({
+      where: { id: Number(body.id) },
       data: {
         date: body.date,
         time: body.time,
@@ -40,11 +41,13 @@ export async function POST(req: NextRequest) {
         amount: Number(body.amount),
         status: body.status,
         paymentIntentId: body.paymentIntentId,
-        userId: Number(body.userId),
       },
     });
 
     try {
+      await prisma.orderServices.deleteMany({
+        where: { orderId: response.id },
+      });
       await prisma.orderServices.createMany({
         data: body.services.map((service: any) => ({
           orderId: response.id,
@@ -55,15 +58,11 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json(
         {
-          data: {
-            ...response,
-            services: body.services,
-          },
+          data: { ...response, services: body.services },
         },
         { status: 200 },
       );
     } catch (error: any) {
-      await prisma.order.delete({ where: { id: response.id } });
       return NextResponse.json(
         {
           data: {
