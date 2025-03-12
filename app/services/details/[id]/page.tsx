@@ -19,6 +19,7 @@ const ServiceDetails = async ({ params }: { params: { id: string } }) => {
 
   const response = await apiService.services.getServiceDetails(params ? params.id : null);
   const user = await getUser();
+  console.log('User:', user);
 
   if (response.success) {
     person = response.data;
