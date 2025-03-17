@@ -19,7 +19,7 @@ const Header: React.FC = () => {
 
   const context = useUser();
   const { user, userDetails } = context;
-  console.log('userDetails:', userDetails);
+  // console.log('userDetails:', userDetails);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
@@ -132,37 +132,37 @@ const Header: React.FC = () => {
           </Link>
           <ul className="menu menu-horizontal px-1 text-white hidden lg:flex">
             <li>
-              <Link className="text-white hover:text-primary focus:text-primary" href="/">
+              <Link className="text-white hover:underline hover:scale-110 focus:text-white" href="/">
                 Home
               </Link>
             </li>
 
             {user && (
               <li>
-                <Link className="text-white hover:text-primary focus:text-primary" href="/bookings">
+                <Link className="text-white hover:underline hover:scale-110 focus:text-white" href="/bookings">
                   Bookings
                 </Link>
               </li>
             )}
             <li>
-              <Link className="text-white hover:text-primary focus:text-primary" href="/services">
+              <Link className="text-white hover:underline hover:scale-110 focus:text-white" href="/services">
                 Services
               </Link>
             </li>
             <li>
-              <Link className="text-white hover:text-primary focus:text-primary" href="/gallery">
+              <Link className="text-white hover:underline hover:scale-110 focus:text-white" href="/gallery">
                 Gallery
               </Link>
             </li>
             {isManager && (
               <li>
-                <Link className="text-white hover:text-primary focus:text-primary" href="/report">
+                <Link className="text-white hover:underline hover:scale-110 focus:text-white" href="/report">
                   Report
                 </Link>
               </li>
             )}
             <li>
-              <Link className="text-white hover:text-primary focus:text-primary" href="/about">
+              <Link className="text-white hover:underline hover:scale-110 focus:text-white" href="/about">
                 About Us
               </Link>
             </li>

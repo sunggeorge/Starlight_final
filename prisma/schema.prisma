@@ -33,8 +33,10 @@ model review {
     servicePersonId Int?           @db.SmallInt
     message         String?        @db.VarChar
     userId          Int?           @db.SmallInt
+    orderId         Int?           @db.SmallInt
     servicePerson   servicePerson? @relation(fields: [servicePersonId], references: [id], onDelete: Cascade, map: "public_review_servicePersonId_fkey")
     user            user?          @relation(fields: [userId], references: [id], onDelete: Cascade, map: "public_review_userId_fkey")
+    order           order?         @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "public_review_orderId_fkey")
 }
 
 model servicePerson {
@@ -62,6 +64,7 @@ model user {
     uuid       String?  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
     role       String   @default("C")
     review     review[]
+    orders     order[]
 }
 
 model order {
@@ -76,9 +79,12 @@ model order {
     amount          Float?          @default(0)
     status          String?         @default("'Pending'::text")
     paymentIntentId String?
+    userId          Int?            @db.SmallInt
+    user            user?           @relation(fields: [userId], references: [id], onDelete: Cascade, map: "public_order_userId_fkey")
     category        category?       @relation(fields: [categoryId], references: [id], onDelete: SetDefault, map: "public_order_categoryId_fkey")
     servicePerson   servicePerson?  @relation(fields: [personId], references: [id], onDelete: SetDefault, map: "public_order_personId_fkey")
     services        orderServices[]
+    reviews         review[]
 }
 
 model orderServices {

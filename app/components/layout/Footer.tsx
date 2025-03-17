@@ -44,17 +44,17 @@ const Footer = () => {
               <div className="flex justify-center items-center sm:justify-end">
                 <ul className="flex flex-row gap-6 sm:gap-2">
                   <li>
-                    <a className="link text-white font-light">
+                    <a className="link text-white font-light" href="https://www.instagram.com/hanna_beauty_studio_macau?igsh=Z29qbHp1dzd3bDZ3" target="_blank" rel="noopener noreferrer">
                       <FaInstagram className="w-[24px] h-[24px]" />
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a className="link text-white font-light">
                       <BsTwitterX className="w-[24px] h-[24px]" />
                     </a>
-                  </li>
+                  </li> */}
                   <li>
-                    <a className="link text-white font-light">
+                    <a className="link text-white font-light" href="https://www.facebook.com/profile.php?id=100093903774039&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
                       <FaFacebookF className="w-[24px] h-[24px]" />
                     </a>
                   </li>
