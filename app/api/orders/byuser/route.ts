@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
     const orders = await prisma.order.findMany({
       // where,
       include: {
+        user: true,
         services: true,
         servicePerson: true,
         category: true,
