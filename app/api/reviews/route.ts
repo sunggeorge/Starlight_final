@@ -46,17 +46,12 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { servicePersonId, message, rating, userId } = body;
+    const { servicePersonId, message, rating, userId, orderId } = body; //  Accept orderId
 
     // Validate required fields
-    if (
-      servicePersonId === undefined ||
-      userId === undefined ||
-      message.trim() === "" ||
-      rating === undefined
-    ) {
+    if (!servicePersonId || !userId || !message.trim() || rating === undefined || !orderId) {
       return NextResponse.json(
-        { message: "All fields are required." },
+        { message: "All fields are required (including orderId)." },
         { status: 400 }
       );
     }
@@ -64,10 +59,11 @@ export async function POST(req: Request) {
     // Convert IDs to numbers
     const servicePersonIdNum = Number(servicePersonId);
     const userIdNum = Number(userId);
+    const orderIdNum = Number(orderId);
 
-    if (isNaN(servicePersonIdNum) || isNaN(userIdNum)) {
+    if (isNaN(servicePersonIdNum) || isNaN(userIdNum) || isNaN(orderIdNum)) {
       return NextResponse.json(
-        { message: "Invalid servicePersonId or userId." },
+        { message: "Invalid servicePersonId, userId, or orderId." },
         { status: 400 }
       );
     }
@@ -80,11 +76,12 @@ export async function POST(req: Request) {
       );
     }
 
-    //  Save review in the database
+    //  Save review in the database with orderId
     const newReview = await prisma.review.create({
       data: {
         servicePersonId: servicePersonIdNum,
         userId: userIdNum,
+        orderId: orderIdNum, //  Save orderId
         message,
         rating,
         created_at: new Date(),

@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '@/app/context/UserContext';
 import { UserRoles } from '../lib/constants/role';
-// import { FaRegEdit } from 'react-icons/fa';
-// import { MdOutlineRateReview } from 'react-icons/md';
 import { FaStar } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 import apiService from '@/app/lib/services/apiService';
 
 const Bookings = () => {
@@ -15,6 +14,7 @@ const Bookings = () => {
 
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter(); // ✅ Router for navigation
 
   useEffect(() => {
     async function fetchOrders() {
@@ -29,28 +29,7 @@ const Bookings = () => {
         }
         if (response && response.success) {
           let ordersData = [...response.data];
-          if (Array.isArray(ordersData)) {
-            ordersData.sort((a: any, b: any) => {
-              const parseTime = (timeStr: string) => {
-                const isPM = /PM/i.test(timeStr);
-                let t = timeStr.replace(/\s?(AM|PM)$/i, '').trim();
-                let [hour, minute] = t.split(':').map(Number);
-                if (isPM && hour < 12) {
-                  hour += 12;
-                }
-                if (!isPM && hour === 12) {
-                  hour = 0;
-                }
-                return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-              };
-              const aTime = parseTime(a.time);
-              const bTime = parseTime(b.time);
-              const aDateTime = new Date(`${a.date}T${aTime}`).getTime();
-              const bDateTime = new Date(`${b.date}T${bTime}`).getTime();
-              return bDateTime - aDateTime; // Newest first
-            });
-          }
-          console.log("Sorted Orders:", ordersData);
+          ordersData.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
           setOrders(ordersData);
         }
       } catch (error) {
@@ -89,6 +68,8 @@ const Bookings = () => {
                   <th className="text-center">Technician</th>
                   <th className="text-center">Amount</th>
                   <th className="text-center">Status</th>
+                  <th className="text-center">Review</th>
+                  <th className="text-center">Update</th>
                 </tr>
               </thead>
               <tbody>
@@ -100,23 +81,27 @@ const Bookings = () => {
                     <td className="text-center">{order.servicePerson.name}</td>
                     <td className="text-center">${order.amount}</td>
                     <td className="text-center">{order.status}</td>
-                    {isCustomer && <td className="text-center">
-                      {(!order.reviews || Object.keys(order.reviews).length === 0) ? (
-                        <button
-                          className="btn bg-primary/10 font-normal text-primary hover:bg-primary/25 hover:border-primary/5"
-                        >
-                          Review
-                        </button>
-                      ) : 
-                        <div className="badge badge-primary badge-outline px-3 py-1 h-auto gap-2 ml-auto">
-                          <FaStar />
-                          {Math.round(order.reviews[0].rating as number)}
-                        </div>}
-                    </td>}
+                    {isCustomer && (
+                      <td className="text-center">
+                        {order.reviews && order.reviews.length > 0 ? (
+                          <div className="flex items-center justify-center">
+                            <FaStar className="text-yellow-400" />
+                            <span className="ml-1">{Math.round(order.reviews[0].rating)}</span>
+                          </div>
+                        ) : (
+                          <button
+                            className="btn bg-primary/10 font-normal text-primary hover:bg-primary/25 hover:border-primary/5"
+                            onClick={() =>
+                              router.push(`/review/${order.servicePerson.id}?orderId=${order.id}`)
+                            }
+                          >
+                            Review
+                          </button>
+                        )}
+                      </td>
+                    )}
                     <td className="text-center">
-                    <button className="btn btn-primary font-normal" >
-                      Update
-                    </button>
+                      <button className="btn btn-primary font-normal">Update</button>
                     </td>
                   </tr>
                 ))}
