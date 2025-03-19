@@ -1,182 +1,197 @@
 'use server';
 
 import { createClient } from '@/app/lib/utils/supabase/server';
+import prisma from '@/app/lib/utils/prisma/database';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import prisma from '@/app/lib/utils/prisma/database';
 import { headers } from 'next/headers';
 import { userExtended } from '@/app/lib/interfaces/service';
 
+/**
+ *  User Login
+ */
 export const login = async (data: { email: string; password: string }, redirectUrl?: string) => {
   const supabase = createClient();
-  const response = await supabase.auth.signInWithPassword(data);
+  const { data: authData, error } = await supabase.auth.signInWithPassword(data);
 
-  if (response.error) {
-    return JSON.stringify(response);
+  if (error) {
+    console.error("🚨 Login Error:", error.message);
+    return { error: error.message };
   }
 
   revalidatePath('/', 'layout');
   redirect(redirectUrl ? redirectUrl : '/');
 };
 
+/**
+ *  User Registration
+ */
 export const register = async (data: {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  confirmPassword: string;
 }) => {
   const supabase = createClient();
   const origin = headers().get('origin');
 
+  //  Prevent duplicate registration
   const isAlreadyRegistered = await prisma.user.findFirst({
-    where: {
-      email: data.email,
-    },
+    where: { email: data.email },
   });
 
   if (isAlreadyRegistered) {
-    return JSON.stringify({
-      error: {
-        message: 'User with email: ' + data.email + ' already exists.',
-      },
-    });
+    return { error: `User with email ${data.email} already exists.` };
   }
 
-  const response = await supabase.auth.signUp({
-    ...data,
-    options: {
-      emailRedirectTo: `${origin}/auth/callback?next=${origin}`,
-    },
+  //  Sign up the user in Supabase
+  const { data: authData, error } = await supabase.auth.signUp({
+    email: data.email,
+    password: data.password,
+    options: { emailRedirectTo: `${origin}/auth/callback?next=${origin}` },
   });
 
-  if (response.error) {
-    return JSON.stringify(response);
+  if (error) {
+    console.error("🚨 Registration Error:", error.message);
+    return { error: error.message };
   }
 
-  const responseUser = await prisma.user.create({
+  //  Create user record in Prisma
+  const newUser = await prisma.user.create({
     data: {
       email: data.email,
       first_name: data.firstName,
       last_name: data.lastName,
-      uuid: response.data.user?.id,
+      uuid: authData.user?.id,
     },
   });
 
-  if (!responseUser) {
-    return JSON.stringify(responseUser);
-  }
-
-  return JSON.stringify(response);
+  return newUser;
 };
 
+/**
+ *  Forgot Password
+ */
 export const forgotPassword = async (data: { email: string }) => {
   const supabase = createClient();
   const origin = headers().get('origin');
 
-  const response = await supabase.auth.resetPasswordForEmail(data.email, {
+  const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
     redirectTo: `${origin}/update-password`,
   });
 
-  if (response.error) {
-    return JSON.stringify(response);
+  if (error) {
+    console.error("🚨 Forgot Password Error:", error.message);
+    return { error: error.message };
   }
 
-  return JSON.stringify(response);
+  return { message: "Password reset email sent successfully!" };
 };
 
-export const resetPassword = async (data: { password: string; confirmPassword: string }, code: string) => {
+/**
+ * Reset Password with Token
+ */
+export const resetPassword = async (data: { password: string }, code: string) => {
   const supabase = createClient();
 
   try {
-    const responseExchangeCodeForSession = await supabase.auth.exchangeCodeForSession(code);
+    //  Exchange the code for a session
+    const { error: sessionError } = await supabase.auth.exchangeCodeForSession(code);
+    if (sessionError) throw new Error(sessionError.message);
 
-    if (responseExchangeCodeForSession.error) {
-      return JSON.stringify(responseExchangeCodeForSession);
-    }
+    //  Update password
+    const { error: updateError } = await supabase.auth.updateUser({ password: data.password });
+    if (updateError) throw new Error(updateError.message);
 
-    const responseUpdateUser = await supabase.auth.updateUser({
-      password: data.password,
-    });
-
-    if (responseUpdateUser.error) {
-      return JSON.stringify(responseUpdateUser);
-    }
-
-    return JSON.stringify(responseUpdateUser);
-  } catch (error: any) {
-    return JSON.stringify({
-      error: {
-        message: 'Invalid code used. Please check code and try again.',
-        type: error.constructor.name,
-      },
-    });
+    return { message: "Password successfully updated!" };
+  } catch (error) {
+    console.error("🚨 Reset Password Error:", error);
+    return { error: error.message };
   }
 };
 
-export const updatePassword = async (data: { password: string; confirmPassword: string }) => {
+/**
+ *  Update Password for Logged-In Users
+ */
+export const updatePassword = async (data: { password: string }) => {
   const supabase = createClient();
+  const { error } = await supabase.auth.updateUser({ password: data.password });
 
-  const response = await supabase.auth.updateUser({
-    password: data.password,
-  });
-
-  if (response.error) {
-    return JSON.stringify(response);
+  if (error) {
+    console.error("🚨 Update Password Error:", error.message);
+    return { error: error.message };
   }
 
-  return JSON.stringify(response);
+  return { message: "Password updated successfully!" };
 };
 
+/**
+ *  Logout User
+ */
 export const logout = async () => {
   const supabase = createClient();
+  const { error } = await supabase.auth.signOut();
 
-  const response = await supabase.auth.signOut();
-
-  if (response.error) {
-    return JSON.stringify(response);
+  if (error) {
+    console.error("🚨 Logout Error:", error.message);
+    return { error: error.message };
   }
 
   revalidatePath('/', 'layout');
   redirect('/');
 };
 
+/**
+ * Get Current User and Match with Prisma Database
+ */
 export const getUser = async () => {
   const supabase = createClient();
-  const response = await supabase.auth.getUser();
 
-  const matchedUser = response.data.user ? await prisma.user.findFirst({
-    where: {
-      email: response.data.user.email,
-    },
-  }) : null;
+  //  Ensure the session is refreshed
+  await supabase.auth.refreshSession();
 
-  if (response.error) {
-    return response.data.user;
+  const { data: authData, error } = await supabase.auth.getUser();
+  if (error || !authData?.user) {
+    console.error("🚨 No active user session found!", error?.message);
+    return null;
   }
-  const returnUser: userExtended = {
-    ...response.data.user,
-    email: response.data.user.email || null,
-    uuid: matchedUser?.uuid || '',
-    imageUrl: matchedUser?.imageUrl || '',
-    first_name: matchedUser?.first_name || '',
-    last_name: matchedUser?.last_name || '',
-    userId: matchedUser?.id || 0,
-    id: matchedUser?.id || 0,
-    created_at: new Date(response.data.user.created_at),
-    role: response.data.user.role || ''
+
+  //  Find matching user in Prisma database
+  const matchedUser = await prisma.user.findFirst({
+    where: { uuid: authData.user.id },
+    select: { id: true, email: true, first_name: true, last_name: true, imageUrl: true },
+  });
+
+  if (!matchedUser) {
+    console.error("🚨 No matching user found in Prisma for UUID:", authData.user.id);
+    return null;
+  }
+
+  return {
+    ...authData.user,
+    email: matchedUser.email,
+    uuid: authData.user.id,
+    imageUrl: matchedUser.imageUrl || '',
+    first_name: matchedUser.first_name || '',
+    last_name: matchedUser.last_name || '',
+    userId: matchedUser.id, // ✅ Use database `id` as `userId`
+    id: matchedUser.id, // ✅ This is the correct user ID
+    created_at: new Date(authData.user.created_at),
+    role: authData.user.role || '',
   };
-  // returnUser.userId = matchedUser?.id;    
-  return returnUser;
 };
 
+/**
+ *  Get User Session
+ */
 export const getSession = async () => {
   const supabase = createClient();
-  const response = await supabase.auth.getSession();
+  const { data: sessionData, error } = await supabase.auth.getSession();
 
-  if (response.error) {
-    return response.data.session;
+  if (error) {
+    console.error("🚨 Get Session Error:", error.message);
+    return null;
   }
 
-  return response.data.session;
+  return sessionData.session;
 };
