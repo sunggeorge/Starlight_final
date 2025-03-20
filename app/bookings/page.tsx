@@ -55,7 +55,8 @@ const Bookings = () => {
           {isManager && <p>You are a <b>Manager</b></p>}
         </div>
         <div>
-          <h2 className="text-lg font-bold mb-2">Your Orders</h2>
+          {isCustomer && <h2 className="text-lg font-bold mb-2">Your Orders</h2>}
+          {isManager && <h2 className="text-lg font-bold mb-2">Manage Orders</h2>}
           {loading ? (
             <p>Loading orders...</p>
           ) : orders.length > 0 ? (
