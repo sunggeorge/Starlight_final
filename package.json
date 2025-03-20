@@ -27,6 +27,7 @@
     "stripe": "^14.25.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.51.1",
     "@prisma/client": "^5.22.0",
     "@svgr/webpack": "^8.1.0",
     "@types/google.maps": "^3.58.1",
