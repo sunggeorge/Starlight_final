@@ -144,7 +144,7 @@ const ReviewPage = ({ params }: { params: { servicePersonId: string } }) => {
                   onClick={() => router.push(`/services/details/${servicePersonId}`)}
                   className="mt-6 bg-blue-500 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all"
                 >
-                  OK
+                  ok
                 </button>
               </div>
             </div>
