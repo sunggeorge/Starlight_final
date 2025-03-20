@@ -1,20 +1,38 @@
-'use client';
+"use client";
 
-import '@/app/styles/rating.css';
-import React from 'react';
+import React from "react";
 
 interface RatingProps {
-  rating: number;
+  rating: number;  // Rating value (e.g., 4.5)
   className?: string;
 }
-const Rating: React.FC<RatingProps> = ({ rating = 0, className = '' }) => {
+
+const Rating: React.FC<RatingProps> = ({ rating = 0, className = "" }) => {
+  const fullStars = Math.floor(rating);  // Get full stars (e.g., 4 in 4.5)
+  const hasHalfStar = rating % 1 !== 0;  // Check if there's a half-star
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);  // Calculate remaining empty stars
+
   return (
-    <div className={`rating rating-sm flex items-center gap-2 ${className}`}>
-      <div className="flex rating-stars relative">
-        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" disabled />
-        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-300" disabled />
-      </div>
-      <span className="text-xs">{rating}</span>
+    <div className={`flex items-center gap-1 ${className}`}>
+      {/* Full Stars (⭐) */}
+      {Array(fullStars)
+        .fill(0)
+        .map((_, i) => (
+          <span key={`full-${i}`} className="text-yellow-400 text-lg">⭐</span>
+        ))}
+
+      {/* Half Star (⭐️ ½) */}
+      {hasHalfStar && <span className="text-yellow-400 text-lg">⭐️</span>}
+
+      {/* Empty Stars (☆) */}
+      {Array(emptyStars)
+        .fill(0)
+        .map((_, i) => (
+          <span key={`empty-${i}`} className="text-gray-400 text-lg">☆</span>
+        ))}
+
+      {/* Show numeric rating (e.g., 4.5) */}
+      <span className="text-xs text-gray-600 ml-1">{rating.toFixed(1)}</span>
     </div>
   );
 };
