@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useUser } from '@/app/context/UserContext';
 import { UserRoles } from '../lib/constants/role';
 import apiService from '@/app/lib/services/apiService';
+import { useSort } from '@/app/lib/utils/useSort';
 
 const Reports = () => {
   const { user, userDetails } = useUser();
-
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState('');
+  const [viewMode, setViewMode] = useState<'table' | 'chart'>('table');
 
   useEffect(() => {
     async function fetchOrders() {
@@ -35,6 +36,8 @@ const Reports = () => {
     ? orders.filter(order => order.date.startsWith(selectedMonth))
     : orders;
 
+  const { sortedItems: sortedOrders, requestSort, sortConfig } = useSort(filteredOrders, 'id');
+  
   const totalRevenue = filteredOrders.reduce((sum, order) => sum + order.amount, 0);
   const totalOrders = filteredOrders.length;
 
@@ -46,41 +49,80 @@ const Reports = () => {
           <label className="font-medium">Filter by Date:</label>
           <input
             type="month"
-            value={selectedMonth}
+            defaultValue={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="input input-bordered ml-2"
+            lang="en"
+            className="border border-gray-400 rounded px-3 py-1 ml-2"
           />
         </div>
+
+        {/* Tabs for switching views */}
+        <div className="flex justify-center gap-4 mb-6">
+          <button
+            className={`px-4 py-2 rounded ${viewMode === 'table' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+            onClick={() => setViewMode('table')}
+          >
+            Table View
+          </button>
+          <button
+            className={`px-4 py-2 rounded ${viewMode === 'chart' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+            onClick={() => setViewMode('chart')}
+          >
+            Chart View
+          </button>
+        </div>
+
         {loading ? (
           <p>Loading report data...</p>
         ) : (
           <div>
-            <h2 className="text-lg font-bold mb-2">Summary</h2>
-            <p>Total Revenue: ${totalRevenue.toFixed(2)}</p>
-            <p>Total Orders: {totalOrders}</p>
-            <h2 className="text-lg font-bold mt-4">Order Details</h2>
-            <table className="table-zebra-zebra table-lg w-full">
-              <thead>
-                <tr>
-                  <th className="text-center">Order ID</th>
-                  <th className="text-center">Date</th>
-                  <th className="text-center">Customer</th>
-                  <th className="text-center">Technician</th>
-                  <th className="text-center">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredOrders.map((order) => (
-                  <tr key={order.id}>
-                    <td className="text-center">{order.id}</td>
-                    <td className="text-center">{order.date}</td>
-                    <td className="text-center">{}</td>
-                    <td className="text-center">{order.servicePerson.name}</td>
-                    <td className="text-center">${order.amount.toFixed(2)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {viewMode === 'chart' && (
+              <div>
+                <h2 className="text-lg font-bold mb-2">Chart View</h2>
+                <p>Chart will be displayed here.</p>
+              </div>
+            )}
+
+            {viewMode === 'table' && (
+              <div>                
+                <h2 className="text-lg font-bold mb-2">Summary</h2>
+                <p>Total Revenue: ${totalRevenue.toFixed(2)}</p>
+                <p>Total Orders: {totalOrders}</p>
+                <h2 className="text-lg font-bold mt-4">Order Details</h2>
+                <table className="w-full border-collapse border border-gray-300 shadow-md rounded-lg">
+                  <thead className="bg-gray-200 text-gray-700">
+                    <tr>
+                      <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('id')}>
+                        Order ID {sortConfig.key === 'id' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
+                      </th>
+                      <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('date')}>
+                        Date {sortConfig.key === 'date' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
+                      </th>
+                      <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('customer')}>
+                        Customer {sortConfig.key === 'customer' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
+                      </th>
+                      <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('servicePerson.name')}>
+                        Technician {sortConfig.key === 'servicePerson.name' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
+                      </th>
+                      <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('amount')}>
+                        Amount {sortConfig.key === 'amount' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {sortedOrders.map((order) => (
+                      <tr key={order.id} className="hover:bg-gray-100 transition">
+                        <td className="px-4 py-2 border text-center">{order.id}</td>
+                        <td className="px-4 py-2 border text-center">{order.date}</td>
+                        <td className="px-4 py-2 border text-center">{order.user? `${order.user.first_name} ${order.user.last_name}` : 'N/A'}</td>
+                        <td className="px-4 py-2 border text-center">{order.servicePerson.name}</td>
+                        <td className="px-4 py-2 border text-center font-semibold">${order.amount.toFixed(2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
       </div>
