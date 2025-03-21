@@ -98,7 +98,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ referer }) => {
             Login
           </button>
         </form>
-        <div className="divider text-sm">or continue with</div>
+        {/* <div className="divider text-sm">or continue with</div>
         <button
           className="btn btn-outline btn-md border-gray-300 hover:bg-white"
           onClick={() =>
@@ -109,7 +109,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ referer }) => {
           type="button"
         >
           <FcGoogle className="w-6 h-6" />
-        </button>
+        </button> */}
         <div className="flex justify-between items-center mt-2">
           <Link className="link text-primary text-xs" href="/forgot-password">
             Forgot password?

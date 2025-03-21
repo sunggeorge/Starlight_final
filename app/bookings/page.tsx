@@ -5,6 +5,8 @@ import { UserRoles } from '../lib/constants/role';
 import { FaStar } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import apiService from '@/app/lib/services/apiService';
+import toast from 'react-hot-toast';
+import { OrderStatus } from '@/app/lib/constants/orders';
 
 const Bookings = () => {
   const { user, userDetails } = useUser();
@@ -14,7 +16,7 @@ const Bookings = () => {
 
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // ✅ Router for navigation
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchOrders() {
@@ -43,6 +45,24 @@ const Bookings = () => {
     }
   }, [user, isCustomer, isStaff, isManager, userDetails]);
 
+  const handleStatusChange = async (orderId: any, newStatus: string) => {
+    try {
+      const token = user?.token;
+      const response = await apiService.orders.update({ id: orderId, status: newStatus, token });
+      if (response && response.success) {
+        toast.success("Order status updated");
+        setOrders((prevOrders) =>
+          prevOrders.map((order) => (order.id === orderId ? { ...order, status: newStatus } : order))
+        );
+      } else {
+        toast.error("Failed to update order status");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error updating order status");
+    }
+  };
+
   return (
     <div className="bookings flex flex-col flex-grow w-full">
       <div className="container mx-auto py-4 px-4 sm:py-8">
@@ -69,7 +89,7 @@ const Bookings = () => {
                   <th className="text-center">Technician</th>
                   <th className="text-center">Amount</th>
                   <th className="text-center">Status</th>
-                  <th className="text-center">Review</th>
+                  {isCustomer && <th className="text-center">Review</th>}
                   <th className="text-center">Update</th>
                 </tr>
               </thead>
@@ -81,7 +101,21 @@ const Bookings = () => {
                     <td className="text-center">{order.time}</td>
                     <td className="text-center">{order.servicePerson.name}</td>
                     <td className="text-center">${order.amount}</td>
-                    <td className="text-center">{order.status}</td>
+                    <td className="text-center">
+                      {isManager ? (
+                        <select
+                          defaultValue={order.status}
+                          onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                          aria-label="Order status"
+                        >
+                          <option value={OrderStatus.succeeded}>{OrderStatus.succeeded}</option>
+                          <option value={OrderStatus.noShow} className="text-error">{OrderStatus.noShow}</option>
+                          <option value={OrderStatus.completed} className="text-success">{OrderStatus.completed}</option>
+                        </select>
+                      ) : (
+                        order.status
+                      )}
+                    </td>
                     {isCustomer && (
                       <td className="text-center">
                         {order.reviews && order.reviews.length > 0 ? (
@@ -101,9 +135,11 @@ const Bookings = () => {
                         )}
                       </td>
                     )}
+    
                     <td className="text-center">
                       <button className="btn btn-primary font-normal">Update</button>
                     </td>
+
                   </tr>
                 ))}
               </tbody>

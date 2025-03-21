@@ -1,6 +1,6 @@
 export enum ServiceCategory {
-  nail = 'Nail',
-  nailArt = 'Nail Art',
-  eyelashExtensions = 'Eyelash Extensions',
-  keratinEyelash = 'Keratin Eyelash',
+  nail = 'nail',
+  nail_art = 'nail art',
+  eyelash_extensions = 'eyelash extensions',
+  keratin_eyelash = 'keratin eyelash',
 }

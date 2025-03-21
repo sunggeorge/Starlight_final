@@ -23,7 +23,7 @@ const ServicesCategories = async () => {
               key={item.id}
               title={item.title as string}
               icon={
-                <ServiceIcon type={ServiceCategory[item.title?.toLocaleLowerCase() as keyof typeof ServiceCategory]} />
+                <ServiceIcon type={ServiceCategory[item.title?.toLocaleLowerCase().replace(/\s+/g, '_') as keyof typeof ServiceCategory]} />
               }
               routeUrl={`/services?category=${(item.title as string).toLowerCase()}`}
             />
