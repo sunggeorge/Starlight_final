@@ -17,11 +17,11 @@ export async function PUT(req: NextRequest) {
     );
   }
 
-  if (!body || !body.services || !body.id) {
+  if (!body || !body.id) {
     return NextResponse.json(
       {
         data: {
-          message: 'Bad request. Missing required fields.',
+          message: 'Bad request. Missing required field: id.',
           type: 'Error',
         },
       },
@@ -29,39 +29,51 @@ export async function PUT(req: NextRequest) {
     );
   }
 
-  try {
-    const response = await prisma.order.update({
-      where: { id: Number(body.id) },
-      data: {
-        date: body.date,
-        time: body.time,
-        location: body.location,
-        personId: Number(body.personId),
-        categoryId: Number(body.categoryId),
-        amount: Number(body.amount),
-        status: body.status,
-        paymentIntentId: body.paymentIntentId,
-      },
-    });
-
+  if (body.services) {
     try {
-      await prisma.orderServices.deleteMany({
-        where: { orderId: response.id },
-      });
-      await prisma.orderServices.createMany({
-        data: body.services.map((service: any) => ({
-          orderId: response.id,
-          title: service.title,
-          quantity: Number(service.quantity),
-        })),
+      const response = await prisma.order.update({
+        where: { id: Number(body.id) },
+        data: {
+          date: body.date,
+          time: body.time,
+          location: body.location,
+          personId: Number(body.personId),
+          categoryId: Number(body.categoryId),
+          amount: Number(body.amount),
+          status: body.status,
+          paymentIntentId: body.paymentIntentId,
+        },
       });
 
-      return NextResponse.json(
-        {
-          data: { ...response, services: body.services },
-        },
-        { status: 200 },
-      );
+      try {
+        await prisma.orderServices.deleteMany({
+          where: { orderId: response.id },
+        });
+        await prisma.orderServices.createMany({
+          data: body.services.map((service: any) => ({
+            orderId: response.id,
+            title: service.title,
+            quantity: Number(service.quantity),
+          })),
+        });
+
+        return NextResponse.json(
+          {
+            data: { ...response, services: body.services },
+          },
+          { status: 200 },
+        );
+      } catch (error: any) {
+        return NextResponse.json(
+          {
+            data: {
+              message: error.message,
+              type: error.constructor.name,
+            },
+          },
+          { status: 500 },
+        );
+      }
     } catch (error: any) {
       return NextResponse.json(
         {
@@ -73,15 +85,33 @@ export async function PUT(req: NextRequest) {
         { status: 500 },
       );
     }
-  } catch (error: any) {
+  } else if (body.status) {
+    try {
+      const response = await prisma.order.update({
+        where: { id: Number(body.id) },
+        data: { status: body.status },
+      });
+      return NextResponse.json({ data: response }, { status: 200 });
+    } catch (error: any) {
+      return NextResponse.json(
+        {
+          data: {
+            message: error.message,
+            type: error.constructor.name,
+          },
+        },
+        { status: 500 },
+      );
+    }
+  } else {
     return NextResponse.json(
       {
         data: {
-          message: error.message,
-          type: error.constructor.name,
+          message: 'Bad request. Missing required fields.',
+          type: 'Error',
         },
       },
-      { status: 500 },
+      { status: 400 },
     );
   }
 }

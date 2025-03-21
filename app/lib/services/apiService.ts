@@ -157,7 +157,7 @@ const apiService = {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${payload.token ? payload.token : ''}`,
           },
-          body: JSON.stringify(payload.data),
+          body: JSON.stringify(payload.data ? payload.data : { id: payload.id, status: payload.status }),
         });
         const data = await response.json();
         return {
