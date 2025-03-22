@@ -42,9 +42,9 @@ const AboutContent: React.FC = () => {
         <h2 style={{ color: '#555' }}>Contact Us</h2>
         <p style={{ lineHeight: '1.6', color: '#666', margin: '10px 0' }}>
           <strong>STARLIGHT Nails</strong><br />
-          Address: <br />
-          Telephone number: <br />
-          Email: <br />
+          Address: 97 Rua de Pereira, 4th Floor, Shop T, Yuhow Building, Macau.<br />
+          Telephone number: +853 6555 8867<br />
+          Email: hanna_beauty_studio_macau@gmail.com<br />
           <strong>Hours of Operation:</strong><br />
           Open today: 10:00 am – 07:30 pm<br />
         </p>
