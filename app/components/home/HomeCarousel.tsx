@@ -146,7 +146,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
             <div className="flex flex-wrap w-full">
               <div className="relative flex flex-col items-center justify-center gap-2 p-2 h-[50%] sm:h-full sm:gap-6 sm:p-6 z-10 w-full sm:w-5/12">
                 <h3 className="text-white text-3xl sm:text-5xl font-semibold">Crafted by Artists</h3>
-                <p className="text-white text-lg sm:text-2xl font-semibold">Not Just Nails — It's Art</p>
+                <p className="text-white text-lg sm:text-2xl font-semibold">Not Just Nails — It is Art</p>
                 <p className="text-white text-xs sm:text-sm font-light">
                 Every set is a canvas. Every stroke, a statement.
                 </p>
