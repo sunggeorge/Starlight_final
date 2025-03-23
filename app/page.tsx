@@ -15,7 +15,7 @@ const Home = () => {
       <HomeCarousel />
       <div className="container mx-auto">
         <HomeServicesCategories title="Categories" />
-        <HomePopularServices title="Popular Services" />
+        <HomePopularServices title="Popular Technicians" />
       </div>
     </div>
   );

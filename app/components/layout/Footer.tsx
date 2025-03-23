@@ -24,19 +24,29 @@ const Footer = () => {
                   {/* <Image className="dark:invert" src="/images/logo.png" alt="Logo" width={35} height={35} priority /> */}
                 </Link>
                 <p className="text-gray-200 text-center sm:text-left">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Hanna Beauty Studio
                 </p>
               </div>
               <div className="flex justify-center items-end mb-6 sm:mb-0">
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <Link className="link text-white font-light" href="/about">
-                      About Us
+                    <Link className="link text-white font-light" href="/">
+                      Home
                     </Link>
                   </li>
                   <li>
                     <Link className="link text-white font-light" href="/services">
                       Services
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="link text-white font-light" href="/gallery">
+                      Gallery
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="link text-white font-light" href="/about">
+                      About Us
                     </Link>
                   </li>
                 </ul>
