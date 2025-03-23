@@ -76,10 +76,10 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
           <div className="relative flex w-full h-full rounded-badge bg-gradient-to-r from-primary to-primary/30">
             <div className="flex flex-wrap w-full">
               <div className="relative flex flex-col items-center justify-center gap-2 p-2 h-[50%] sm:h-full sm:gap-6 sm:p-6 z-10 w-full sm:w-5/12">
-                <h3 className="text-white text-3xl sm:text-7xl font-semibold">30%</h3>
-                <p className="text-white text-lg sm:text-2xl font-semibold">Today`s Special!</p>
+                <h3 className="text-white text-3xl sm:text-5xl font-semibold">Beauty Empowered</h3>
+                <p className="text-white text-lg sm:text-2xl font-semibold">Where Style Meets Precision</p>
                 <p className="text-white text-xs sm:text-sm font-light">
-                  Get discount for every booking, only valid today.
+                Feel confident with every fingertip — crafted with care by professionals.
                 </p>
               </div>
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
@@ -87,7 +87,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
                   // src="/images/discount-people-1.png"
                   src="/images/1.jpg"
-                  alt="Today`s Special!"
+                  alt="Beauty Empowered"
                   width={500}
                   height={500}
                 />
@@ -99,10 +99,10 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
           <div className="relative flex w-full h-full rounded-badge bg-gradient-to-r from-yellow-300 to-yellow-300/30">
             <div className="flex flex-wrap w-full">
               <div className="relative flex flex-col items-center justify-center gap-2 p-2 h-[50%] sm:h-full sm:gap-6 sm:p-6 z-10 w-full sm:w-5/12">
-                <h3 className="text-white text-3xl sm:text-7xl font-semibold">25%</h3>
-                <p className="text-white text-lg sm:text-2xl font-semibold">Friday Special!</p>
+                <h3 className="text-white text-3xl sm:text-5xl font-semibold">Nails That Speak</h3>
+                <p className="text-white text-lg sm:text-2xl font-semibold">Art on Every Tip</p>
                 <p className="text-white text-xs sm:text-sm font-light">
-                  Get discount for every booking, only valid today.
+                Express your personality with bold, elegant, or playful nail designs.
                 </p>
               </div>
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
@@ -110,7 +110,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
                   // src="/images/discount-people-2.png"
                   src="/images/2.jpg"
-                  alt="Friday Special!"
+                  alt="Nails That Speak"
                   width={500}
                   height={500}
                 />
@@ -122,10 +122,10 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
           <div className="relative flex w-full h-full rounded-badge bg-gradient-to-r from-orange-400 to-orange-400/30">
             <div className="flex flex-wrap w-full">
               <div className="relative flex flex-col items-center justify-center gap-2 p-2 h-[50%] sm:h-full sm:gap-6 sm:p-6 z-10 w-full sm:w-5/12">
-                <h3 className="text-white text-3xl sm:text-7xl font-semibold">40%</h3>
-                <p className="text-white text-lg sm:text-2xl font-semibold">New Promo!</p>
+                <h3 className="text-white text-3xl sm:text-5xl font-semibold">Shine Every Day</h3>
+                <p className="text-white text-lg sm:text-2xl font-semibold">Simple. Clean. Stunning.</p>
                 <p className="text-white text-xs sm:text-sm font-light">
-                  Get discount for every booking, only valid today.
+                A fresh set of nails makes everything feel better — you deserve it.
                 </p>
               </div>
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
@@ -133,7 +133,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
                   // src="/images/discount-people-3.png"
                   src="/images/3.jpg"
-                  alt="New Promo!"
+                  alt="Shine Every Day"
                   width={500}
                   height={500}
                 />
@@ -145,10 +145,10 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
           <div className="relative flex w-full h-full rounded-badge bg-gradient-to-r from-blue-400 to-blue-400/30">
             <div className="flex flex-wrap w-full">
               <div className="relative flex flex-col items-center justify-center gap-2 p-2 h-[50%] sm:h-full sm:gap-6 sm:p-6 z-10 w-full sm:w-5/12">
-                <h3 className="text-white text-3xl sm:text-7xl font-semibold">35%</h3>
-                <p className="text-white text-lg sm:text-2xl font-semibold">Weekend Special!</p>
+                <h3 className="text-white text-3xl sm:text-5xl font-semibold">Crafted by Artists</h3>
+                <p className="text-white text-lg sm:text-2xl font-semibold">Not Just Nails — It is Art</p>
                 <p className="text-white text-xs sm:text-sm font-light">
-                  Get discount for every booking, only valid today.
+                Every set is a canvas. Every stroke, a statement.
                 </p>
               </div>
               <div className="relative w-full h-[50%] sm:h-full sm:w-7/12">
@@ -156,7 +156,7 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({
                   className="max-h-full w-auto absolute bottom-0 left-[50%] translate-x-[-50%] sm:bottom-0 sm:left-[100%] sm:translate-x-[-100%]"
                   // src="/images/discount-people-4.png"
                   src="/images/4.jpg"
-                  alt="Weekend Special!"
+                  alt="Crafted by Artists"
                   width={500}
                   height={500}
                 />
