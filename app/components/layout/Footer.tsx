@@ -15,10 +15,10 @@ const Footer = () => {
   return (
     <>
       {isVisible && (
-        <div className="footer flex flex-col pt-8 footer-bg">
+        <div className="footer flex flex-col pt-4 footer-bg">
           <div className="container mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-3 w-full py-4 px-4 gap-4 sm:gap-0 sm:py-6">
-              <div className="flex flex-col items-center gap-2 justify-center mb-4 sm:justify-start sm:items-start sm:mb-0">
+            <div className="grid grid-cols-1 sm:grid-cols-3 w-full py-2 px-4 gap-4 sm:gap-0 sm:py-4">
+              <div className="flex flex-col items-center gap-2 justify-center mb-2 sm:justify-start sm:items-start sm:mb-0">
                 <Link className="btn btn-ghost text-xl" href="/">
                   <Image src="/images/logo.png" alt="Logo" width={35} height={35} priority />
                   {/* <Image className="dark:invert" src="/images/logo.png" alt="Logo" width={35} height={35} priority /> */}
@@ -72,7 +72,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="text-white flex justify-center items-center font-extralight p-4 border-t-[1px] border-solid border-white/15 w-full">
+          <div className="text-white flex justify-center items-center font-extralight p-2 border-t-[1px] border-solid border-white/15 w-full">
             &copy;2025 - Nail Shop Online System. All rights reserved.
           </div>
         </div>

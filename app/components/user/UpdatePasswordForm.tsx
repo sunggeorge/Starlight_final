@@ -89,7 +89,7 @@ const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({ code, user }) =
               <input
                 type="password"
                 className="grow"
-                placeholder="Password"
+                placeholder="New Password"
                 {...register('password', passwordValidationSchema)}
               />
             </label>
