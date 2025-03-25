@@ -8,7 +8,7 @@ export async function updateSession(request: NextRequest) {
     },
     
   });
-  console.log('request.cookies:', request.cookies);
+  // console.log('request.cookies:', request.cookies);
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
