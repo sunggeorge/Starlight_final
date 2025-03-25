@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaInstagram } from 'react-icons/fa';
-import { BsTwitterX } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import '@/app/styles/layout.css';
@@ -15,65 +14,35 @@ const Footer = () => {
   return (
     <>
       {isVisible && (
-        <div className="footer flex flex-col pt-4 footer-bg">
+        <div className="footer flex flex-col pt-2 footer-bg">
           <div className="container mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-3 w-full py-2 px-4 gap-4 sm:gap-0 sm:py-4">
-              <div className="flex flex-col items-center gap-2 justify-center mb-2 sm:justify-start sm:items-start sm:mb-0">
-                <Link className="btn btn-ghost text-xl" href="/">
-                  <Image src="/images/logo.png" alt="Logo" width={35} height={35} priority />
-                  {/* <Image className="dark:invert" src="/images/logo.png" alt="Logo" width={35} height={35} priority /> */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 w-full py-1 px-4 gap-2">
+              <div className="flex flex-col items-center gap-1 justify-center sm:justify-start sm:items-start">
+                <Link className="btn btn-ghost btn-sm p-0 min-h-8 h-8" href="/">
+                  <Image src="/images/logo.png" alt="Logo" width={30} height={30} priority />
                 </Link>
-                <p className="text-gray-200 text-center sm:text-left">
+                <p className="text-gray-200 text-sm text-center sm:text-left">
                   Hanna Beauty Studio
                 </p>
               </div>
-              <div className="flex justify-center items-end mb-6 sm:mb-0">
-                <ul className="flex flex-col gap-2">
+              <div className="flex justify-end items-center w-full col-span-2">
+                <ul className="flex flex-row gap-4">
                   <li>
-                    <Link className="link text-white font-light" href="/">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="link text-white font-light" href="/services">
-                      Services
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="link text-white font-light" href="/gallery">
-                      Gallery
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="link text-white font-light" href="/about">
-                      About Us
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="flex justify-center items-center sm:justify-end">
-                <ul className="flex flex-row gap-6 sm:gap-2">
-                  <li>
-                    <a className="link text-white font-light" href="https://www.instagram.com/hanna_beauty_studio_macau?igsh=Z29qbHp1dzd3bDZ3" target="_blank" rel="noopener noreferrer">
-                      <FaInstagram className="w-[24px] h-[24px]" />
+                    <a className="link text-white font-light hover:text-gray-300" href="https://www.instagram.com/hanna_beauty_studio_macau?igsh=Z29qbHp1dzd3bDZ3" target="_blank" rel="noopener noreferrer">
+                      <FaInstagram className="w-[20px] h-[20px]" />
                     </a>
                   </li>
-                  {/* <li>
-                    <a className="link text-white font-light">
-                      <BsTwitterX className="w-[24px] h-[24px]" />
-                    </a>
-                  </li> */}
                   <li>
-                    <a className="link text-white font-light" href="https://www.facebook.com/profile.php?id=100093903774039&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
-                      <FaFacebookF className="w-[24px] h-[24px]" />
+                    <a className="link text-white font-light hover:text-gray-300" href="https://www.facebook.com/profile.php?id=100093903774039&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
+                      <FaFacebookF className="w-[20px] h-[20px]" />
                     </a>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-          <div className="text-white flex justify-center items-center font-extralight p-2 border-t-[1px] border-solid border-white/15 w-full">
-            &copy;2025 - Nail Shop Online System. All rights reserved.
+          <div className="text-white flex justify-center items-center font-extralight text-sm p-1 border-t-[1px] border-solid border-white/15 w-full">
+            &copy;2025 - Hanna Nail Salon System. All rights reserved.
           </div>
         </div>
       )}
