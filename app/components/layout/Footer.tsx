@@ -42,7 +42,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="text-white flex justify-center items-center font-extralight text-sm p-1 border-t-[1px] border-solid border-white/15 w-full">
-            &copy;2025 - Hanna Nail Salon System. All rights reserved.
+            &copy;2025 - Hanna Nail Salon Limited. All rights reserved.
           </div>
         </div>
       )}
