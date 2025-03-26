@@ -1,7 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '@/app/context/UserContext';
-import { UserRoles } from '../lib/constants/role';
+import TechnicianChart from '@/app/components/report/TechnicianChart';
+import { TechnicianData } from '@/app/components/report/TechnicianChart';
 import apiService from '@/app/lib/services/apiService';
 import { useSort } from '@/app/lib/utils/useSort';
 
@@ -40,6 +41,16 @@ const Reports = () => {
   
   const totalRevenue = filteredOrders.reduce((sum, order) => sum + order.amount, 0);
   const totalOrders = filteredOrders.length;
+  const technicianData = Object.values(
+    filteredOrders.reduce((acc, order) => {
+      const tech = order.servicePerson.name;
+      if (!acc[tech]) acc[tech] = { name: tech, revenue: 0 };
+      acc[tech].revenue += order.amount;
+      return acc;
+    }, {} as Record<string, { name: string; revenue: number }>)
+  ) as TechnicianData[];
+  
+  
 
   return (
     <div className="reports flex flex-col flex-grow w-full">
@@ -79,7 +90,7 @@ const Reports = () => {
             {viewMode === 'chart' && (
               <div>
                 <h2 className="text-lg font-bold mb-2">Chart View</h2>
-                <p>Chart will be displayed here.</p>
+                <TechnicianChart data={technicianData} />
               </div>
             )}
 

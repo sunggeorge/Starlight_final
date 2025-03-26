@@ -31,7 +31,7 @@ const PopularServicesPersonCard: React.FC<PopularServicesPersonCardProps> = ({ i
         <div className="card-body p-0">
           <h5 className="my-auto text-gray-500 text-sm">{item.name}</h5>
           <div className="badge bg-primary/10 text-primary p-4 text-xs my-auto">{item.category.title}</div>
-          <Price className="my-auto" price={item.price as number} />
+          {/* <Price className="my-auto" price={item.price as number} /> */}
           <div className="flex gap-4 my-auto">
             <Rating rating={item.rating as number} />
             <Reviews

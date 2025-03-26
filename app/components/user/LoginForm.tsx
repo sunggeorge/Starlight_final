@@ -51,7 +51,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ referer }) => {
     startTransition(async () => {
       toast.remove();
       let response = (await login(data, referer ?? '/')) as any;
-      console.log('response', response);
+      // console.log('response', response);
       response = JSON.parse(response);
 
       if (response.error) {
