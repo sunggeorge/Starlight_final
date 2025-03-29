@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/app/lib/utils/prisma/database";
 
 export const metadata = {
-  title: 'Nail Shop Online System - Profile',
+  title: 'HANNA Nail Shop - Profile',
   description: 'View and manage your profile',
   keywords: 'profile, account, settings',
 };
@@ -33,4 +33,5 @@ export default async function ProfilePage() {
     </div>
   );
 }
+
 

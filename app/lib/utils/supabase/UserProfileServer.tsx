@@ -3,9 +3,9 @@ import UserProfileClient from "./UserProfileClient";
 type UserProfileServerProps = {
   userData: {
     id: number;
-    email: string;
-    first_name: string;
-    last_name: string;
+    email: string | null; // Allow null
+    first_name: string | null; // Allow null
+    last_name: string | null; // Allow null
     role: string;
     created_at: Date;
     imageUrl?: string | null;
