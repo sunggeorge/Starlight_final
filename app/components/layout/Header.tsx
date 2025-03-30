@@ -42,7 +42,7 @@ const Header: React.FC = () => {
           }, isIOS ? 500 : 250);
           return;
         }
-        setIsMobileMenuOpen(false);
+        // setIsMobileMenuOpen(false);
       }
     },
     [isMobileMenuOpen, isIOS],
