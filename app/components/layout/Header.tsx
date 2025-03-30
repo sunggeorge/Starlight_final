@@ -43,6 +43,9 @@ const Header: React.FC = () => {
           return;
         }
         // setIsMobileMenuOpen(false);
+        setTimeout(() => {
+          setIsMobileMenuOpen(false);
+        }, isIOS ? 500 : 50);        
       }
     },
     [isMobileMenuOpen, isIOS],
