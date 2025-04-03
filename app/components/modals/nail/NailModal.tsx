@@ -12,11 +12,13 @@ import { NailModalContext } from '@/app/lib/utils/contextUtils';
 import { nailReducer } from '@/app/lib/utils/reducerUtils';
 import { format } from 'date-fns';
 import { servicePersonExtended } from '@/app/lib/interfaces/service';
+import { order } from '@prisma/client';
 import logService from '@/app/lib/services/logService';
 
 interface NailModalProps {
   person: servicePersonExtended;
   user: Record<string, any> | null;
+  order?: order | null;
   onClose?: () => void;
 }
 
@@ -28,8 +30,9 @@ const NailModal: React.FC<NailModalProps> = ({ person, user, onClose = () => {} 
     step: 1,
     services: nailServices.filter((item) => item.categoryID === person.categoryId)
                           .map((item) => ({ ...item, quantity: 0 })),
-    totalPrice: 0,
-    date: format(new Date(), 'yyyy-MM-dd'),
+    totalPrice: 10,
+    // date: format(new Date(), 'yyyy-MM-dd'),
+    date: format(new Date('2025-06-15'), 'yyyy-MM-dd'),
     time: '09:00 AM',
     promoCode: '',
     location: {
