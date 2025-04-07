@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, useTransition, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuCircleUser } from 'react-icons/lu';
-import { useCallback } from 'react';
 import { logout } from '@/app/lib/utils/authUtils';
 import Loading from '@/app/components/misc/Loading';
 import { MdMenu } from 'react-icons/md';
@@ -13,9 +12,9 @@ import { useUser } from '@/app/context/UserContext';
 import { UserRoles } from '@/app/lib/constants/role';
 import '@/app/styles/layout.css';
 
-
 const Header: React.FC = () => {
-  // const Header: React.FC<HeaderProps> = ({ user, userDetails }) => {
+  // Detect iOS devices
+  const isIOS = typeof window !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   const context = useUser();
   const { user, userDetails } = context;
@@ -40,14 +39,16 @@ const Header: React.FC = () => {
         if (e.relatedTarget && e.relatedTarget.classList.contains('menu-link')) {
           setTimeout(() => {
             setIsMobileMenuOpen(false);
-          }, 250);
-
+          }, isIOS ? 500 : 250);
           return;
         }
-        setIsMobileMenuOpen(false);
+        // setIsMobileMenuOpen(false);
+        setTimeout(() => {
+          setIsMobileMenuOpen(false);
+        }, isIOS ? 500 : 50);        
       }
     },
-    [isMobileMenuOpen],
+    [isMobileMenuOpen, isIOS],
   );
 
   const onBlurUserMenuDropdown = useCallback(
@@ -57,7 +58,6 @@ const Header: React.FC = () => {
           setTimeout(() => {
             setIsUserMenuOpen(false);
           }, 250);
-
           return;
         }
         setIsUserMenuOpen(false);
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
   return (
     <div className="header min-h-[65px]">
       <div className="navbar header-bg px-4 py-1 fixed z-[9999] rounded-none">
-      {/* <div className="navbar bg-base-100 px-4 py-1 fixed z-[9999] rounded-none"> */}
+        {/* <div className="navbar bg-base-100 px-4 py-1 fixed z-[9999] rounded-none"> */}
         <div className="navbar-start">
           <div className="dropdown" onBlur={onBlurMobileDropdown}>
             <label
@@ -85,8 +85,8 @@ const Header: React.FC = () => {
                 className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                <Link className="menu-link text-white hover:text-primary focus:text-primary" href="/">
-                  Home
+                  <Link className="menu-link text-white hover:text-primary focus:text-primary" href="/">
+                    Home
                   </Link>
                 </li>
                 {user && (
@@ -181,7 +181,7 @@ const Header: React.FC = () => {
                 {userDetails && (
                   <div className="avatar flex items-center justify-center absolute top-0 left-0 w-full h-full rounded-full overflow-hidden">
                     {userDetails.imageUrl && (
-                      <Image width={100} height={100} src={userDetails?.imageUrl} alt="User avatar" />
+                      <Image width={45} height={45} src={userDetails?.imageUrl} alt="User avatar" />
                     )}
                     {!userDetails.imageUrl && <LuCircleUser className="w-6 h-6 text-base-100" />}
                   </div>
@@ -219,7 +219,9 @@ const Header: React.FC = () => {
               Sign In
             </Link>
           )}
-          {isPending && <Loading size="small" className="text-primary" classNameContainer="flex" />}
+          {isPending && (
+            <Loading size="small" className="text-primary" classNameContainer="flex" />
+          )}
         </div>
       </div>
     </div>

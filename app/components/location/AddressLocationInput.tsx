@@ -140,7 +140,7 @@ const AddressLocationInput: React.FC<AddressLocationInputProps> = ({
 
   useEffect(() => {
     const location = getAddressLocation();
-    console.log('location', location);
+    // console.log('location', location);
     if (location) {
       onGetCurrentLocation(JSON.parse(location));
     }

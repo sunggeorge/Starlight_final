@@ -151,6 +151,7 @@ const apiService = {
     },
     update: async (payload: any) => {
       try {
+        // console.log('update payload:', payload.data);
         const response = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/orders/update', {
           method: 'PUT',
           headers: {
@@ -210,6 +211,27 @@ const apiService = {
             Authorization: `Bearer ${token}`,
           },
           next: { revalidate: isDevMode ? 0 : 1000 * 60 },
+        });
+        const data = await response.json();
+        return {
+          success: response.status < 300,
+          data: data.data,
+        };
+      } catch (error) {
+        return {
+          success: false,
+          data: error,
+        };
+      }
+    },
+    delete: async (payload: { id: number; token?: string }) => {
+      try {
+        const response = await fetch(process.env.NEXT_PUBLIC_HOST + `/api/orders/delete/${payload.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${payload.token || ''}`,
+          },
         });
         const data = await response.json();
         return {

@@ -6,6 +6,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import PaymentForm from '@/app/components/payment/PaymentForm';
 import OrderSummary from '@/app/components/order/OrderSummary';
+import { ActionMode } from '@/app/lib/constants/actionMode';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -63,12 +64,13 @@ const NailModalStep4 = () => {
             <OrderSummary />
           </div>
         </details>
-        <details className="collapse collapse-arrow bg-white shadow-sm rounded-badge flex justify-between items-center w-full">
+        {state.actionMode === ActionMode.Checkout && (
+          <details className="collapse collapse-arrow bg-white shadow-sm rounded-badge flex justify-between items-center w-full">
           <summary className="collapse-title text-base-100 font-semibold">Payment Details</summary>
           <div className="collapse-content">
             <PaymentForm />
           </div>
-        </details>
+        </details>)}
       </Elements>
     </div>
   );

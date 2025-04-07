@@ -19,6 +19,7 @@ const Calendar: React.FC<CalendarProps> = ({
   defaultValue = new Date(),
   onChange = () => {},
 }) => {
+  console.log('Calendar: ', { minDate, maxDate, defaultValue });
   return (
     <div className="calendar">
       <ReactCalendar

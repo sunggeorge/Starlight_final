@@ -9,7 +9,7 @@ import '@/app/styles/layout.css';
 const Footer = () => {
   const pathname = usePathname();
   const isVisible = !pathname.includes('services/details');
-  const googleMapsUrl = "https://maps.google.com/?q=97+Rua+de+Pereira,+4th+Floor,+Shop+T,+Yuhow+Building,+Macau";
+  const googleMapsUrl = "https://maps.app.goo.gl/vayXBZpkVM87SQDg7?g_st=com.google.maps.preview.copy";
 
   return (
     <>
