@@ -12,6 +12,8 @@ import toast from 'react-hot-toast';
 import { getSession } from '@/app/lib/utils/authUtilsUI';
 import { setOrderNonce } from '@/app/lib/utils/storageUtils';
 import logService from '@/app/lib/services/logService';
+import { ActionMode } from '@/app/lib/constants/actionMode';
+import { OrderStatus } from '@/app/lib/constants/orders';
 
 const PaymentForm = () => {
   const { state, dispatch } = useContext(NailModalContext);
@@ -19,11 +21,12 @@ const PaymentForm = () => {
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  // console.log('PaymentForm state:', state);
   const checkout = useCallback(async () => {
     const session = await getSession();
     const token = session?.access_token;
-    
+    let finalResponse: any = null;
+    // console.log("Checkout process.....")
     const orderData = {
       data: {
         date: state.date,
@@ -32,25 +35,48 @@ const PaymentForm = () => {
         personId: state.person.id,
         categoryId: state.person.categoryId,
         amount: state.totalPrice,
-        status: 'Succeeded',
+        status: OrderStatus.created,
         services: state.services.filter((item: Record<string, any>) => item.quantity > 0),
         userId: state.user.userId,
+        uuid: state.uuid,
       },
       token,
     };
-    const responseCheckout = await apiService.checkout.post(state.totalPrice);
-    const responseCreateOrder = await apiService.orders.post({
-      data: { ...orderData.data, paymentIntentId: responseCheckout.data.payment_intent_id },
-      token: orderData.token,
-    });
 
-    return {
-      ...responseCheckout,
-      data: {
-        ...responseCheckout.data,
-        order: responseCreateOrder.data,
-      },
-    };
+    // if (state.actionMode === ActionMode.Create) {
+    //   const responseCreateOrder = await apiService.orders.post({
+    //     data: { ...orderData.data, paymentIntentId: "" },
+    //     // data: { ...orderData.data, paymentIntentId: responseCheckout.data.payment_intent_id },
+    //     token: orderData.token,
+    //   });
+    //   finalResponse = {
+    //     ...responseCreateOrder,
+    //     data: {
+    //       order: responseCreateOrder.data,
+    //     }
+    //   };
+    // }
+
+    if (state.actionMode === ActionMode.Checkout) {
+      const responseCheckout = await apiService.checkout.post(state.totalPrice);
+      finalResponse = {
+        ...responseCheckout,
+        data: {
+          ...responseCheckout.data,
+          order: orderData.data,
+        }
+      };
+    }
+
+    return finalResponse;
+
+    // return {
+    //   ...responseCheckout,
+    //   data: {
+    //     ...responseCheckout.data,
+    //     order: responseCreateOrder.data,
+    //   },
+    // };
   }, [
     state.date,
     state.location.value,
@@ -72,6 +98,7 @@ const PaymentForm = () => {
   );
 
   const onSubmit = useCallback(async () => {
+    // console.log('onSubmit called...');
     toast.remove();
     if (elements == null) {
       return;
@@ -88,23 +115,45 @@ const PaymentForm = () => {
       }
 
       const checkoutResponse = await checkout();
+      // console.log('Checkout response: ', checkoutResponse);
+      const session = await getSession();
+      const token = session?.access_token;
 
       if (!checkoutResponse.success) {
         toast.error(checkoutResponse.data.message as string);
         return;
+      } else {
+
+        const updateResponse = await apiService.orders.update({
+          data: {
+            id: state.orderId,
+            paymentIntentId: checkoutResponse.data.payment_intent_id,
+          },
+          token: token,
+        });
+        if (updateResponse && updateResponse.success) {
+          toast.success("Payment Intent ID updated");
+        } else {
+          toast.error("Failed to update payment intent ID");
+        }
+
+      }
+      // Checkout Mode: Confirm Payment
+      if (state.actionMode === ActionMode.Checkout) {
+        const confirmPaymentResponse = await confirmPayment(
+          elements,
+          checkoutResponse.data.client_secret,
+          checkoutResponse.data.order.uuid,
+        );
+
+        if (!confirmPaymentResponse.success) {
+          toast.error((confirmPaymentResponse.data as StripeError).message as string);
+          return;
+        }
       }
 
-      const confirmPaymentResponse = await confirmPayment(
-        elements,
-        checkoutResponse.data.client_secret,
-        checkoutResponse.data.order.uuid,
-      );
-
-      if (!confirmPaymentResponse.success) {
-        toast.error((confirmPaymentResponse.data as StripeError).message as string);
-        return;
-      }
     } catch (error) {
+      console.log('Error in payment form: ', error);
       logService.log(error);
       toast.error('Something went wrong. Please try again later.');
       //TODO: update order with status: "Incomplete"

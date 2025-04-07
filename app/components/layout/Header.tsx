@@ -181,7 +181,7 @@ const Header: React.FC = () => {
                 {userDetails && (
                   <div className="avatar flex items-center justify-center absolute top-0 left-0 w-full h-full rounded-full overflow-hidden">
                     {userDetails.imageUrl && (
-                      <Image width={100} height={100} src={userDetails?.imageUrl} alt="User avatar" />
+                      <Image width={45} height={45} src={userDetails?.imageUrl} alt="User avatar" />
                     )}
                     {!userDetails.imageUrl && <LuCircleUser className="w-6 h-6 text-base-100" />}
                   </div>

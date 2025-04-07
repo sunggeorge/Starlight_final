@@ -1,6 +1,7 @@
 import { servicePersonExtended } from '@/app/lib/interfaces/service';
-
+import { ActionMode } from '../constants/actionMode';
 interface NailState {
+  actionMode: ActionMode
   person: servicePersonExtended;
   step: number;
   services: Record<string, any>[];
@@ -8,6 +9,8 @@ interface NailState {
   date: Date;
   time: string;
   promoCode: string;
+  uuid: string;
+  orderId: number;
   location: Record<string, any>;
   proceedCheckout: boolean;
   isPaymentInformationComplete: boolean;

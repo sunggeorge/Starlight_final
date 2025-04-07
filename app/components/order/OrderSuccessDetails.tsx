@@ -19,6 +19,7 @@ interface OrderSuccessDetailsProps {
 const OrderSuccessDetails: React.FC<OrderSuccessDetailsProps> = ({ order, nonce }) => {
   const router = useRouter();
   const orderData = JSON.parse(order as string);
+  // console.log('Order Data:', orderData);
 
   const [isOrderDetailsVisibile, setIsOrderDetailsVisibile] = useState(false);
   useEffect(() => {
@@ -41,9 +42,9 @@ const OrderSuccessDetails: React.FC<OrderSuccessDetailsProps> = ({ order, nonce 
           <div className="flex items-center justify-center w-[100px] h-[100px] bg-primary rounded-full">
             <FaSquareCheck className="w-[30px] h-[30px] text-white" />
           </div>
-          <h1 className="text-xl text-base-100 font-semibold sm:text-3xl">Booking Successful!</h1>
+          <h1 className="text-xl text-base-100 font-semibold sm:text-3xl">Online Payment Completed!</h1>
           <p className="text-xs text-base-100 font-normal text-center sm:text-sm">
-            You have successfully made payment and book the services.
+            You have successfully made payment. Thanks for using our service! Please review this order.
           </p>
           <details
             className="collapse collapse-arrow bg-white shadow-sm rounded-badge flex justify-between items-center w-full"

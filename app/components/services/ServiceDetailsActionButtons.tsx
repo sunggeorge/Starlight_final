@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import NailModal from "@/app/components/modals/nail/NailModal"; // Import the modal for booking services
 import { servicePersonExtended } from "@/app/lib/interfaces/service"; // Interface for the service provider
 import { useRouter } from "next/navigation"; // Next.js router for navigation
+import { ActionMode } from "@/app/lib/constants/actionMode";
 
 interface ServiceDetailsActionButtonsProps {
   person: servicePersonExtended; // The service provider details
@@ -36,7 +37,7 @@ const ServiceDetailsActionButtons: React.FC<ServiceDetailsActionButtonsProps> = 
         router.push("/login"); // Redirect to login page if the user is not logged in
         return;
       }
-      console.log("Book Now:", person);
+      // console.log("Book Now:", person);
       setActiveModal(person.category.title); // Open the corresponding service modal
     },
     [person.category.title, router, user]
@@ -58,12 +59,13 @@ const ServiceDetailsActionButtons: React.FC<ServiceDetailsActionButtonsProps> = 
     <div className="service-details-action-buttons fixed bottom-0 left-0 w-full rounded-t-badge bg-white flex justify-center gap-2 py-4 border-t-[1px] border-solid border-gray-200 sm:py-8">
 
       {/*  Button to open the booking modal */}
+      
       <button className="btn btn-primary font-normal" onClick={onBookNow}>
         Book Now
       </button>
 
       {/*  Conditionally render the booking modal */}
-      {activeModal && <NailModal person={person} onClose={onCloseModal} user={user} />}
+      {activeModal && <NailModal person={person} onClose={onCloseModal} user={user} actionMode={ActionMode.Create}/>}
     </div>
   );
 };
