@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useUser } from '@/app/context/UserContext';
 import TechnicianChart from '@/app/components/report/TechnicianChart';
 import { TechnicianData } from '@/app/components/report/TechnicianChart';
+import OrderStatusChart from '@/app/components/report/OrderStatusChart';
+import { OrderStatusData } from '@/app/components/report/OrderStatusChart';
 import apiService from '@/app/lib/services/apiService';
 import { useSort } from '@/app/lib/utils/useSort';
 
@@ -49,6 +51,16 @@ const Reports = () => {
       return acc;
     }, {} as Record<string, { name: string; revenue: number }>)
   ) as TechnicianData[];
+
+  const orderStatusData = Object.values(
+    filteredOrders.reduce((acc, order) => {
+      const status = order.status
+      if (!acc[status]) acc[status] = { status: status, amount: 0 };
+      acc[status].amount += order.amount;
+      return acc;
+    }, {} as Record<string, { status: string; amount: number }>)
+  ) as OrderStatusData[];
+  console.log('orderStatusData', orderStatusData);
   
   
 
@@ -89,8 +101,10 @@ const Reports = () => {
           <div>
             {viewMode === 'chart' && (
               <div>
-                <h2 className="text-lg font-bold mb-2">Chart View</h2>
+                <h2 className="text-lg font-bold mb-2">Chart View: Revenue by Technician</h2>
                 <TechnicianChart data={technicianData} />
+                <h2 className="text-lg font-bold mb-2">Chart View: Order Status</h2>
+                <OrderStatusChart data={orderStatusData} />                
               </div>
             )}
 
@@ -115,6 +129,9 @@ const Reports = () => {
                       <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('servicePerson.name')}>
                         Technician {sortConfig.key === 'servicePerson.name' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
                       </th>
+                      <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('status')}>
+                        Status {sortConfig.key === 'status' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
+                      </th>                      
                       <th className="px-4 py-2 border cursor-pointer" onClick={() => requestSort('amount')}>
                         Amount {sortConfig.key === 'amount' ? (sortConfig.direction === 'asc' ? '▲' : '▼') : ''}
                       </th>
@@ -127,6 +144,7 @@ const Reports = () => {
                         <td className="px-4 py-2 border text-center">{order.date}</td>
                         <td className="px-4 py-2 border text-center">{order.user? `${order.user.first_name} ${order.user.last_name}` : 'N/A'}</td>
                         <td className="px-4 py-2 border text-center">{order.servicePerson.name}</td>
+                        <td className="px-4 py-2 border text-center">{order.status}</td>
                         <td className="px-4 py-2 border text-center font-semibold">${order.amount.toFixed(2)}</td>
                       </tr>
                     ))}

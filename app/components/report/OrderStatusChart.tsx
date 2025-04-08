@@ -12,24 +12,24 @@ import {
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement);
 
-export interface TechnicianData {
-  name: string;
-  revenue: number;
+export interface OrderStatusData {
+  status: string;
+  amount: number;
 }
 
 interface Props {
-  data: TechnicianData[];
+  data: OrderStatusData[];
 }
 
-const TechnicianChart: React.FC<Props> = ({ data }) => {
+const OrderStatusChart: React.FC<Props> = ({ data }) => {
   const chartColors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#9CCC65'];
 
   const barData = {
-    labels: data.map((d) => d.name),
+    labels: data.map((d) => d.status),
     datasets: [
       {
-        label: 'Revenue',
-        data: data.map((d) => d.revenue),
+        label: 'Amount',
+        data: data.map((d) => d.amount),
         backgroundColor: data.map((_, i) => chartColors[i % chartColors.length]),
       },
     ],
@@ -44,11 +44,11 @@ const TechnicianChart: React.FC<Props> = ({ data }) => {
   };
 
   const pieData = {
-    labels: data.map((d) => d.name),
+    labels: data.map((d) => d.status),
     datasets: [
       {
-        label: 'Revenue',
-        data: data.map((d) => d.revenue),
+        label: 'Amount',
+        data: data.map((d) => d.amount),
         backgroundColor: data.map((_, i) => chartColors[i % chartColors.length]),
       },
     ],
@@ -86,4 +86,4 @@ const TechnicianChart: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default TechnicianChart;
+export default OrderStatusChart;

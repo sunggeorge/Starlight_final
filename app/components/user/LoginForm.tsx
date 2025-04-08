@@ -73,6 +73,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ referer }) => {
         <LiaUserLockSolid className="w-[80px] h-[80px] text-primary" />
       </div>
       <div className="flex flex-col item-center justify-center gap-4 w-[90%] sm:w-[500px] bg-white p-14 rounded-badge shadow-md border-[1px] border-solid border-gray-200">
+        <span>Demo Accounts: (password: testtest)</span>
+        <span><b>Customer:  </b>test2@test.com</span>
+        <span><b>Manager:  </b>manager@test.com</span>
         <form onSubmit={handleSubmit(submitForm)} className="flex flex-col w-full gap-4" autoComplete="off">
           <div className="flex flex-col w-full gap-2">
             <label className="input input-bordered input-primary input-md w-full max-w-full flex rounded-badge items-center gap-2">
