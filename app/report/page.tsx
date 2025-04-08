@@ -37,7 +37,13 @@ const Reports = () => {
     ? orders.filter(order => order.date.startsWith(selectedMonth))
     : orders;
 
-  const { sortedItems: sortedOrders, requestSort, sortConfig } = useSort(filteredOrders, 'id');
+    const filteredOrdersWithCustomer = filteredOrders.map(order => ({
+      ...order,
+      customer: order.user ? `${order.user.first_name} ${order.user.last_name}` : 'N/A'
+    }));
+    
+    const { sortedItems: sortedOrders, requestSort, sortConfig } = useSort(filteredOrdersWithCustomer, 'id');
+    
   
   const totalRevenue = filteredOrders.reduce((sum, order) => sum + order.amount, 0);
   const totalOrders = filteredOrders.length;
