@@ -92,7 +92,7 @@ const Header: React.FC = () => {
                 {user && (
                   <li>
                     <Link className="menu-link text-white hover:text-primary focus:text-primary" href="/bookings">
-                      Bookings
+                      My Bookings
                     </Link>
                   </li>
                 )}
@@ -140,7 +140,7 @@ const Header: React.FC = () => {
             {user && (
               <li>
                 <Link className="text-white hover:underline hover:scale-110 focus:text-white" href="/bookings">
-                  Bookings
+                  My Bookings
                 </Link>
               </li>
             )}

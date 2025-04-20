@@ -1,15 +1,72 @@
 'use client';
 
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Calendar from '@/app/components/date/Calendar';
 import { NailModalContext } from '@/app/lib/utils/contextUtils';
 import { startTime } from '@/app/lib/data';
-import { format } from 'date-fns';
+import { getSession } from '@/app/lib/utils/authUtilsUI';
+import apiService from '@/app/lib/services/apiService';
+import { format, set } from 'date-fns';
+
+// Type definition for booked time records
+interface BookedTime {
+  id: string;
+  date: string;
+  time: string;
+}
 
 const NailModalStep2 = () => {
   const { state, dispatch } = useContext(NailModalContext);
+  const [bookedTimes, setBookedTimes] = useState<BookedTime[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<string>(state.date);
+
+  // Fetch booked times when component mounts or person changes
+  useEffect(() => {
+    const fetchBookedTimes = async () => {
+      if (!state.person?.id) return;
+      
+      setIsLoading(true);
+      try {
+        const session = await getSession();
+        const token = session?.access_token;        
+        console.log('personId', state.person.id);
+        const response = await apiService.orders.getServicePersonOrders({
+          id: state.person.id,  
+          token: token || "",
+        });
+        if (!response || !response.success) {
+          console.error('Failed to fetch booked times:', response?.data);
+          return;
+        } else {
+          // Properly type and transform the data to match our BookedTime interface
+          let bookings = [...response.data];
+          setBookedTimes(bookings);
+          console.log('bookedTimes', bookings);
+        }
+      } catch (error) {
+        console.error('Error fetching booked times:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBookedTimes();
+  }, [state.person]);
+
+  // Check if a specific time slot is available
+  const isTimeAvailable = useCallback(
+    (date: string, time: string) => {
+      return !bookedTimes.some(
+        (booking) => booking.date === date && booking.time === time
+      );
+    },
+    [bookedTimes]
+  );
+
   const onDateChange = useCallback(
     (value: any) => {
+      setSelectedDate(format(value as Date, 'yyyy-MM-dd'));
       dispatch({
         type: 'setDate',
         payload: format(value as Date, 'yyyy-MM-dd'),
@@ -38,20 +95,30 @@ const NailModalStep2 = () => {
   return (
     <div className="nail-modal-step-2 flex flex-col w-full h-full gap-4">
       <p className="text-md text-base-100 font-semibold my-2">Select Date</p>
-      <Calendar onChange={onDateChange} defaultValue={new Date(state.date)} />
+      <Calendar onChange={onDateChange} defaultValue={new Date(`${state.date}T00:00:00`)}/>
       <p className="text-md text-base-100 font-semibold my-2">Choose Start Time</p>
       <div className="start-time-filter flex flex-wrap gap-2 mb-4 justify-center">
-        {startTime.map((time) => (
-          <button
-            key={time.id}
-            className={`btn btn-primary btn-outline btn-sm rounded-badge ${
-              time.value === state.time ? 'btn-active' : ''
-            }`}
-            onClick={(e) => onSelectTime(time.value, e)}
-          >
-            {time.value}
-          </button>
-        ))}
+        {isLoading ? (
+          <span className="loading loading-spinner loading-md"></span>
+        ) : (
+          console.log('isTimeAvailable', bookedTimes),
+          startTime.map((time) => {
+            const isAvailable = isTimeAvailable(selectedDate, time.value);
+            return (
+              <button
+                key={time.id}
+                className={`btn ${isAvailable ? 'btn-primary' : 'btn-disabled'} btn-outline btn-sm rounded-badge ${
+                  time.value === state.time ? 'btn-active' : ''
+                }`}
+                onClick={(e) => onSelectTime(time.value, e)}
+                disabled={!isAvailable}
+              >
+                {time.value}
+                {!isAvailable && <span className="ml-1 text-xs">(Booked)</span>}
+              </button>
+            );
+          })
+        )}
       </div>
       <p className="text-md text-base-100 font-semibold my-2">Promo Code</p>
       <input

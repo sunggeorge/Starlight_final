@@ -224,6 +224,29 @@ const apiService = {
         };
       }
     },
+    getServicePersonOrders: async ({ id, token }: { id?: string | null; token: string }) => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_HOST + '/api/orders/byserviceperson';
+        const url = id ? baseUrl + `/${id}` : baseUrl;
+        console.log('url:', url);
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          next: { revalidate: isDevMode ? 0 : 1000 * 60 },
+        });
+        const data = await response.json();
+        return {
+          success: response.status < 300,
+          data: data.data,
+        };
+      } catch (error) {
+        return {
+          success: false,
+          data: error,
+        };
+      }
+    },    
     delete: async (payload: { id: number; token?: string }) => {
       try {
         const response = await fetch(process.env.NEXT_PUBLIC_HOST + `/api/orders/delete/${payload.id}`, {
